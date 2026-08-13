@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>歌手たかはしたけしのホームページ | 公式ポータル</title>
+  <meta name="description" content="歌手たかはしたけしの公式ポータル。コンサートの想い出アーカイブ、公式ブログ、なぞり絵アート（ArtWorkOut）、たけぽん情報へ直結します。">
+  
+  <!-- Google Fonts: Outfit, Noto Sans JP, Shippori Mincho -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;500;600;700&family=Shippori+Mincho:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Blue Glows & Cyber Grid -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-grid-overlay"></div>
+
+  <!-- Header Navigation -->
+  <header id="header" class="site-header">
+    <div class="header-container">
+      <a href="#hero" class="brand-logo">
+        <span class="brand-en">TAKESHI TAKAHASHI</span>
+        <span class="brand-ja">歌手たかはしたけしのホームページ</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="nav-desktop">
+        <ul class="nav-links">
+          <li><a href="#concerts" class="nav-link"><i class="fa-solid fa-music"></i> コンサートの想い出</a></li>
+          <li><a href="#gallery" class="nav-link"><i class="fa-solid fa-palette"></i> なぞり絵</a></li>
+          <li><a href="#takepon" class="nav-link"><i class="fa-solid fa-seedling"></i> たけぽん</a></li>
+          <li><a href="https://rbdrmnp.sakura.ne.jp/t2nm/?cat=5" target="_blank" rel="noopener noreferrer" class="nav-link external-nav"><i class="fa-solid fa-pen-nib"></i> ブログ</a></li>
+          <li><a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=58" target="_blank" rel="noopener noreferrer" class="nav-link external-nav"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile Toggle -->
+      <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="メニューを開く">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-drawer" class="mobile-drawer">
+    <div class="drawer-header">
+      <span class="drawer-brand">歌手たかはしたけし</span>
+      <button id="drawer-close" class="drawer-close-btn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="#hero" class="mobile-link"><i class="fa-solid fa-house"></i> ホーム</a></li>
+      <li><a href="#concerts" class="mobile-link"><i class="fa-solid fa-music"></i> コンサートの想い出</a></li>
+      <li><a href="#gallery" class="mobile-link"><i class="fa-solid fa-palette"></i> ArtWorkOut なぞり絵</a></li>
+      <li><a href="#takepon" class="mobile-link"><i class="fa-solid fa-seedling"></i> たけぽん & こじろう</a></li>
+      <li><a href="https://rbdrmnp.sakura.ne.jp/t2nm/?cat=5" target="_blank" rel="noopener" class="mobile-link"><i class="fa-solid fa-pen-nib"></i> 公式ブログ</a></li>
+      <li><a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=36" target="_blank" rel="noopener" class="mobile-link"><i class="fa-solid fa-globe"></i> たけぽんのなんでもやってみるHP</a></li>
+      <li><a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=58" target="_blank" rel="noopener" class="mobile-link"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- Hero / Quick Hub Section -->
+    <section id="hero" class="hero-section">
+      <div class="container">
+        <div class="hero-banner-card cyber-card">
+          <div class="hero-bg-image" style="background-image: url('https://rbdrmnp.sakura.ne.jp/t2nm/wp-content/uploads/2022/06/main_t2nm.jpg');"></div>
+          <div class="hero-overlay"></div>
+          
+          <div class="hero-text-content">
+            <div class="status-indicator">
+              <span class="status-dot"></span>
+              <span class="status-text">OFFICIAL PORTAL</span>
+            </div>
+            <h1 class="hero-title">歌手 たかはしたけし</h1>
+            <p class="hero-subtitle">Vocalist Takeshi Takahashi Official Portal</p>
+          </div>
+        </div>
+
+        <!-- 4 Large Direct Action Cards (0秒アクセスハブ) -->
+        <div class="hub-grid">
+          <!-- Hub 1: Latest Concert -->
+          <a href="#concerts" class="cyber-card hub-card featured-hub">
+            <div class="hub-icon"><i class="fa-solid fa-music"></i></div>
+            <div class="hub-body">
+              <span class="hub-badge"><i class="fa-solid fa-sparkles"></i> LATEST ARCHIVE</span>
+              <h2 class="hub-title">春のコンサート 2026</h2>
+              <p class="hub-meta">前半・後半・アンコール・お礼状</p>
+            </div>
+            <div class="hub-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          </a>
+
+          <!-- Hub 2: ArtWorkOut Gallery -->
+          <a href="#gallery" class="cyber-card hub-card">
+            <div class="hub-icon"><i class="fa-solid fa-palette"></i></div>
+            <div class="hub-body">
+              <span class="hub-badge sub">ARTWORKOUT</span>
+              <h2 class="hub-title">なぞり絵ギャラリー</h2>
+              <p class="hub-meta">iPad手描きデジタルアート作品</p>
+            </div>
+            <div class="hub-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          </a>
+
+          <!-- Hub 3: Official Blog -->
+          <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?cat=5" target="_blank" rel="noopener noreferrer" class="cyber-card hub-card">
+            <div class="hub-icon"><i class="fa-solid fa-pen-nib"></i></div>
+            <div class="hub-body">
+              <span class="hub-badge sub">OFFICIAL BLOG</span>
+              <h2 class="hub-title">公式ブログ</h2>
+              <p class="hub-meta">演奏日記・日々の更新記事 <i class="fa-solid fa-arrow-up-right-from-square small-icon"></i></p>
+            </div>
+            <div class="hub-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          </a>
+
+          <!-- Hub 4: Takepon -->
+          <a href="#takepon" class="cyber-card hub-card">
+            <div class="hub-icon"><i class="fa-solid fa-seedling"></i></div>
+            <div class="hub-body">
+              <span class="hub-badge sub">CHARACTERS</span>
+              <h2 class="hub-title">たけぽん & こじろう</h2>
+              <p class="hub-meta">公式キャラクター & 活動日記</p>
+            </div>
+            <div class="hub-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Concerts & Memories Section (実データ直結) -->
+    <section id="concerts" class="section">
+      <div class="container">
+        <div class="section-title-wrap">
+          <span class="section-sub">CONCERT ARCHIVES</span>
+          <h2 class="section-heading">コンサートの想い出</h2>
+          <div class="section-bar"></div>
+        </div>
+
+        <!-- Latest Concert 2026 Highlight -->
+        <div class="cyber-card concert-highlight-card">
+          <div class="highlight-header">
+            <span class="concert-year-badge">2026.05.23</span>
+            <span class="concert-category-tag">2605_春のコンサート</span>
+          </div>
+          <h3 class="highlight-title">2026「春のコンサート」公演記録</h3>
+          
+          <!-- Article Post Links (実データ) -->
+          <div class="article-grid">
+            <!-- Item 1: 前半 -->
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?p=1375" target="_blank" rel="noopener" class="cyber-card post-link-card">
+              <div class="post-thumb-wrap">
+                <img src="https://rbdrmnp.sakura.ne.jp/t2nm/wp-content/uploads/2026/06/banner260523_01-1-420x280.jpg" alt="2605 春のコンサート【前半】" loading="lazy">
+              </div>
+              <div class="post-info">
+                <span class="post-date">2026.06.30</span>
+                <h4 class="post-title">2605 春のコンサート【前半】 <i class="fa-solid fa-arrow-up-right-from-square"></i></h4>
+              </div>
+            </a>
+
+            <!-- Item 2: 後半 -->
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?p=1365" target="_blank" rel="noopener" class="cyber-card post-link-card">
+              <div class="post-thumb-wrap">
+                <img src="https://rbdrmnp.sakura.ne.jp/t2nm/wp-content/uploads/2026/06/banner260523_02-1-420x280.jpg" alt="2605 春のコンサート【後半】" loading="lazy">
+              </div>
+              <div class="post-info">
+                <span class="post-date">2026.06.25</span>
+                <h4 class="post-title">2605 春のコンサート【後半】 <i class="fa-solid fa-arrow-up-right-from-square"></i></h4>
+              </div>
+            </a>
+
+            <!-- Item 3: アンコール -->
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?p=1355" target="_blank" rel="noopener" class="cyber-card post-link-card">
+              <div class="post-thumb-wrap">
+                <img src="https://rbdrmnp.sakura.ne.jp/t2nm/wp-content/uploads/2026/06/banner260523_03-420x280.jpg" alt="2605 春のコンサート【アンコール】" loading="lazy">
+              </div>
+              <div class="post-info">
+                <span class="post-date">2026.06.20</span>
+                <h4 class="post-title">2605 春のコンサート【アンコール】 <i class="fa-solid fa-arrow-up-right-from-square"></i></h4>
+              </div>
+            </a>
+
+            <!-- Item 4: お礼状 -->
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?p=1348" target="_blank" rel="noopener" class="cyber-card post-link-card">
+              <div class="post-thumb-wrap">
+                <img src="https://rbdrmnp.sakura.ne.jp/t2nm/wp-content/uploads/2026/06/礼状260523_02-420x280.jpg" alt="2605 お礼状" loading="lazy">
+              </div>
+              <div class="post-info">
+                <span class="post-date">2026.06.04</span>
+                <h4 class="post-title">2605 お礼状 <i class="fa-solid fa-arrow-up-right-from-square"></i></h4>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Past Concerts Years Navigation (年表リスト) -->
+        <div class="past-years-box cyber-card">
+          <h4 class="past-years-title"><i class="fa-solid fa-clock-rotate-left"></i> 過去のコンサートアーカイブ一覧</h4>
+          <div class="years-tag-grid">
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=1187" target="_blank" rel="noopener" class="year-pill">
+              <span>クリスマスコンサート2025</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=1102" target="_blank" rel="noopener" class="year-pill">
+              <span>2025「５月のコンサート」</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=979" target="_blank" rel="noopener" class="year-pill">
+              <span>2024「クリスマスコンサート」</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=775" target="_blank" rel="noopener" class="year-pill">
+              <span>2024「春のコンサート」</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=686" target="_blank" rel="noopener" class="year-pill">
+              <span>2023「秋のコンサート」</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=202" target="_blank" rel="noopener" class="year-pill">
+              <span>2023「５月コンサート」</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=162" target="_blank" rel="noopener" class="year-pill">
+              <span>2022「クリスマスコンサート」</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=90" target="_blank" rel="noopener" class="year-pill">
+              <span>2022「夏のコンサート」特集</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ArtWorkOut Gallery Section -->
+    <section id="gallery" class="section">
+      <div class="container">
+        <div class="section-title-wrap">
+          <span class="section-sub">DIGITAL TRACING ART</span>
+          <h2 class="section-heading">ArtWorkOut なぞり絵ギャラリー</h2>
+          <div class="section-bar"></div>
+        </div>
+
+        <div class="gallery-grid">
+          <!-- Artwork 1 -->
+          <div class="cyber-card art-card" onclick="openLightbox('初夏の彩光', '2026.06 / ArtWorkOut 202606_a', 'art-bg-1')">
+            <div class="art-visual art-bg-1">
+              <span class="art-id">202606_a</span>
+              <div class="art-center-glow"></div>
+              <div class="art-title-hover">初夏の彩光 <i class="fa-solid fa-magnifying-glass-plus"></i></div>
+            </div>
+            <div class="art-bar">
+              <span class="art-name">初夏の彩光</span>
+              <span class="art-date">2026.06</span>
+            </div>
+          </div>
+
+          <!-- Artwork 2 -->
+          <div class="cyber-card art-card" onclick="openLightbox('蒼のシンフォニー', '2026.06 / ArtWorkOut 202606_b', 'art-bg-2')">
+            <div class="art-visual art-bg-2">
+              <span class="art-id">202606_b</span>
+              <div class="art-center-glow"></div>
+              <div class="art-title-hover">蒼のシンフォニー <i class="fa-solid fa-magnifying-glass-plus"></i></div>
+            </div>
+            <div class="art-bar">
+              <span class="art-name">蒼のシンフォニー</span>
+              <span class="art-date">2026.06</span>
+            </div>
+          </div>
+
+          <!-- Artwork 3 -->
+          <div class="cyber-card art-card" onclick="openLightbox('祈りの光陰', '2026.07 / ArtWorkOut 202607_a', 'art-bg-3')">
+            <div class="art-visual art-bg-3">
+              <span class="art-id">202607_a</span>
+              <div class="art-center-glow"></div>
+              <div class="art-title-hover">祈りの光陰 <i class="fa-solid fa-magnifying-glass-plus"></i></div>
+            </div>
+            <div class="art-bar">
+              <span class="art-name">祈りの光陰</span>
+              <span class="art-date">2026.07</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-hint">
+          <span><i class="fa-solid fa-hand-pointer"></i> タップで全画面拡大表示できます（画像はDesktop/ArtWorkOutフォルダと連動）</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Takepon & Kojiro Section (実画像アバター) -->
+    <section id="takepon" class="section">
+      <div class="container">
+        <div class="section-title-wrap">
+          <span class="section-sub">OFFICIAL CHARACTERS</span>
+          <h2 class="section-heading">たけぽん & こじろう</h2>
+          <div class="section-bar"></div>
+        </div>
+
+        <div class="character-grid">
+          <!-- Takepon Card -->
+          <div class="cyber-card char-card">
+            <div class="char-avatar-wrap">
+              <img src="https://rbdrmnp.sakura.ne.jp/t2nm/wp-content/uploads/2023/06/IMG_0591.jpg" alt="たけぽん" class="char-avatar-img">
+            </div>
+            <div class="char-info">
+              <span class="char-tag">公式マスコット</span>
+              <h3 class="char-name">たけぽん</h3>
+              <p class="char-desc">歌手たかはしたけしの音楽活動を見守るメインマスコット。</p>
+              <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=36" target="_blank" rel="noopener" class="btn btn-outline-cyber btn-sm">
+                <i class="fa-solid fa-globe"></i> たけぽんのホームページへ
+              </a>
+            </div>
+          </div>
+
+          <!-- Kojiro Card -->
+          <div class="cyber-card char-card">
+            <div class="char-avatar-wrap">
+              <img src="https://rbdrmnp.sakura.ne.jp/t2nm/wp-content/uploads/2023/06/icon_5260.jpg" alt="こじろう" class="char-avatar-img">
+            </div>
+            <div class="char-info">
+              <span class="char-tag">公式パートナー</span>
+              <h3 class="char-name">こじろう</h3>
+              <p class="char-desc">ブログの吹き出しや日々のつづりに登場する仲良し相棒。</p>
+              <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?cat=5" target="_blank" rel="noopener" class="btn btn-outline-cyber btn-sm">
+                <i class="fa-solid fa-pen-nib"></i> 登場記事（ブログ）を見る
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Official Links & Contact -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-title-wrap">
+          <span class="section-sub">OFFICIAL CHANNELS & CONTACT</span>
+          <h2 class="section-heading">公式リンク & お問い合わせ</h2>
+          <div class="section-bar"></div>
+        </div>
+
+        <div class="official-links-grid">
+          <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?cat=5" target="_blank" rel="noopener noreferrer" class="cyber-card link-portal-card">
+            <div class="portal-icon"><i class="fa-solid fa-pen-nib"></i></div>
+            <div>
+              <h4 class="portal-name">公式ブログ</h4>
+              <p class="portal-url">rbdrmnp.sakura.ne.jp/t2nm/?cat=5</p>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square portal-arrow"></i>
+          </a>
+
+          <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=58" target="_blank" rel="noopener noreferrer" class="cyber-card link-portal-card">
+            <div class="portal-icon instagram-icon"><i class="fa-brands fa-instagram"></i></div>
+            <div>
+              <h4 class="portal-name">公式 Instagram</h4>
+              <p class="portal-url">rbdrmnp.sakura.ne.jp/t2nm/?page_id=58</p>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square portal-arrow"></i>
+          </a>
+
+          <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=165" target="_blank" rel="noopener noreferrer" class="cyber-card link-portal-card">
+            <div class="portal-icon"><i class="fa-solid fa-compact-disc"></i></div>
+            <div>
+              <h4 class="portal-name">コンサート想い出アルバム</h4>
+              <p class="portal-url">rbdrmnp.sakura.ne.jp/t2nm/?page_id=165</p>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square portal-arrow"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <span class="footer-title">歌手たかはしたけしのホームページ</span>
+        <span class="footer-sub">Official Portal Edition</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?cat=5" target="_blank" rel="noopener noreferrer" class="f-link">
+          <i class="fa-solid fa-pen-nib"></i> ブログ
+        </a>
+        <a href="https://rbdrmnp.sakura.ne.jp/t2nm/?page_id=58" target="_blank" rel="noopener noreferrer" class="f-link">
+          <i class="fa-brands fa-instagram"></i> Instagram
+        </a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      &copy; 歌手たかはしたけしのホームページ. All Rights Reserved.
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox-modal" class="lightbox-modal" onclick="closeLightbox(event)">
+    <div class="lightbox-dialog">
+      <button class="lightbox-close" onclick="closeLightbox(event)"><i class="fa-solid fa-xmark"></i></button>
+      <div id="lightbox-art-display" class="lightbox-view"></div>
+      <div class="lightbox-meta">
+        <h3 id="lightbox-title">作品名</h3>
+        <p id="lightbox-desc">詳細情報</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+</html>
