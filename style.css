@@ -1,51 +1,54 @@
 /* ==========================================================================
    歌手たかはしたけし 公式ポータル スタイルシート (style.css)
    コンセプト: 「The World God Only Knows (神のみぞ知るセカイ)」表紙オマージュ
-   テーマ: 『Antique Clockwork & Celestial Gold』
-   - 緻密な機械式時計（歯車、針、ローマ数字文字盤、アストロラーベ）
-   - アンティークゴールド、シャンパンゴールド、ディープミッドナイトブルー、アメジスト
-   - ヴィクトリアン調の繊細な装飾枠（フィリグリー、四隅のコーナーオーナメント）
-   - HTML完全無変更（CSS + 動的Canvas背景による最高峰のビジュアル）
+   テーマ: 『White Parchment & Antique Gold Clockwork Edition (白基調・限定装丁版)』
+   - 象牙色・パールホワイトの気品あるキャンバス
+   - アンティークゴールド、真鍮、ローズゴールドの繊細な装飾枠 & 飾り罫
+   - 白背景に映えるリアルタイム機械式スケルトン時計（歯車・ブレゲ針・ローマ数字文字盤）
+   - 極めて高い視認性・可読性と、豪華な美術書のような佇まいを両立
+   - HTML完全無変更（CSS + 動的Canvas背景による構築）
    ========================================================================== */
 
 /* --- Google Web Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=Shippori+Mincho:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=Shippori+Mincho:wght@400;600;700;800&display=swap');
 
 :root {
-  /* --- Celestial & Antique Palette --- */
-  --bg-deep: #060913;                 /* 漆黒の深遠なミッドナイト */
-  --bg-space: #0b1122;                /* 星辰のディープブルー */
-  --bg-surface: rgba(13, 20, 38, 0.78);/* 半透明のノーブルガラス */
-  --bg-surface-elevated: rgba(18, 28, 54, 0.88);
-  --bg-card: rgba(14, 22, 44, 0.75);  /* 神のみ表紙風の深みあるカード面 */
-  --bg-card-hover: rgba(22, 34, 66, 0.9);
-  --bg-card-solid: #0d152a;
+  /* --- Clean White Canvas & Luxury Surfaces --- */
+  --bg-canvas: #F8F9FC;                 /* 洗練されたパールアイボリーキャンバス */
+  --bg-canvas-alt: #EDF2F7;             /* セクションコントラスト用の淡い象牙色 */
+  --bg-surface: rgba(255, 255, 255, 0.88); /* 上品なすりガラスホワイト */
+  --bg-surface-elevated: #FFFFFF;
+  --bg-card: #FFFFFF;                   /* 純白ソリッドカード（視認性最優先） */
+  --bg-card-hover: #FFFFFF;
+  --bg-card-subtle: #F8FAFC;
 
-  /* --- Gold & Brass Variations (神のみぞ知るセカイ 表紙箔押し調) --- */
-  --gold-pure: #F3E5AB;               /* シャンパンハイライト */
-  --gold-bright: #F7D070;             /* 輝くゴールド */
-  --gold-primary: #D4AF37;            /* クラシカル・ロイヤルゴールド */
-  --gold-rich: #C5A059;               /* 深みのある金箔 */
-  --gold-dark: #8C6D37;               /* アンティークブロンズ / 真鍮 */
-  --gold-muted: rgba(212, 175, 55, 0.35);
-  --gold-glow: rgba(247, 208, 112, 0.28);
-  --gold-glow-intense: rgba(247, 208, 112, 0.55);
+  /* --- Antique Gold & Brass (白地でクッキリ美しく映える濃密なゴールド) --- */
+  --gold-pure: #FDF4D2;                 /* ハイライト */
+  --gold-bright: #D97706;               /* 輝くアンバーゴールド */
+  --gold-primary: #B48316;              /* クラシックゴールド（輪郭が際立つ） */
+  --gold-rich: #92400E;                 /* 金箔の陰影 */
+  --gold-dark: #78350F;                 /* アンティーク真鍮 / ブロンズ */
+  --gold-border: rgba(180, 131, 22, 0.38);
+  --gold-glow: rgba(180, 131, 22, 0.15);
+  --gold-glow-intense: rgba(217, 119, 6, 0.28);
 
-  /* --- Gemstone & Celestial Accents --- */
-  --gem-sapphire: #1E40AF;
-  --gem-sapphire-light: #38BDF8;
+  /* --- Gemstone Accents (上品な宝石アクセント) --- */
+  --gem-sapphire: #1D4ED8;
+  --gem-sapphire-light: #2563EB;
+  --gem-sapphire-bg: #EFF6FF;
   --gem-ruby: #BE123C;
-  --gem-ruby-bright: #F43F5E;
-  --gem-emerald: #059669;
+  --gem-ruby-bright: #E11D48;
+  --gem-ruby-bg: #FFF1F2;
   --gem-amethyst: #7E22CE;
-  --gem-amethyst-light: #A855F7;
+  --gem-amethyst-light: #9333EA;
+  --gem-amethyst-bg: #FAF5FF;
 
-  /* --- High-Legibility Typography --- */
-  --text-pure: #FFFFFF;               /* 純白ハイライト */
-  --text-main: #F1F5F9;               /* 本文（極めて読みやすいクリアホワイト） */
-  --text-sub: #CBD5E1;                /* 補足文章（上品なペールスレート） */
-  --text-gold: #F7D070;               /* ゴールドテキスト */
-  --text-muted: #94A3B8;              /* メタ情報 */
+  /* --- High-Contrast Typography (圧倒的な読みやすさ) --- */
+  --text-pure: #0A1128;                 /* 漆黒ロイヤルミッドナイト・見出し用 */
+  --text-main: #1E293B;                 /* 本文用ディープスレート（疲れず鮮明） */
+  --text-sub: #475569;                  /* 補足文章 */
+  --text-gold: #92400E;                 /* アンティークゴールド文字 */
+  --text-muted: #64748B;                /* メタ情報 */
 
   /* --- Fonts --- */
   --font-title-en: 'Cinzel', 'Playfair Display', serif;
@@ -54,39 +57,37 @@
   --font-sans: 'Noto Sans JP', 'Outfit', sans-serif;
 
   /* --- Gradients --- */
-  --grad-gold: linear-gradient(135deg, #FFF0C2 0%, #F7D070 30%, #D4AF37 65%, #8C6D37 100%);
-  --grad-gold-subtle: linear-gradient(135deg, rgba(247, 208, 112, 0.15), rgba(212, 175, 55, 0.04));
-  --grad-royal-border: linear-gradient(135deg, #F7D070, #8C6D37 50%, #F7D070);
+  --grad-gold: linear-gradient(135deg, #D97706 0%, #B48316 50%, #78350F 100%);
+  --grad-gold-light: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  --grad-gold-subtle: linear-gradient(135deg, rgba(217, 119, 6, 0.08), rgba(180, 131, 22, 0.02));
+  --grad-royal-border: linear-gradient(135deg, #D97706, #78350F 50%, #B48316);
 
-  /* --- Shadows & Glows --- */
-  --shadow-clockwork: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.12);
-  --shadow-card-hover: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 35px rgba(247, 208, 112, 0.28);
-  --shadow-gem-ruby: 0 0 20px rgba(244, 63, 94, 0.4);
+  /* --- Shadows (浮き上がりと立体感) --- */
+  --shadow-clockwork: 0 8px 24px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(180, 131, 22, 0.08);
+  --shadow-card-hover: 0 16px 36px rgba(180, 131, 22, 0.16), 0 4px 12px rgba(15, 23, 42, 0.06);
 
-  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* --- Scrollbar Customization --- */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #060913;
+  background: #EDF2F7;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #F7D070 0%, #8C6D37 50%, #D4AF37 100%);
-  border-radius: 5px;
-  border: 2px solid #060913;
+  background: linear-gradient(180deg, #D97706 0%, #B48316 100%);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #FFF0C2;
-  box-shadow: 0 0 10px #F7D070;
+  background: #92400E;
 }
 
 /* --- Text Selection --- */
 ::selection {
-  background: #D4AF37;
-  color: #060913;
+  background: #B48316;
+  color: #FFFFFF;
 }
 
 /* --- Base Resets --- */
@@ -102,7 +103,7 @@ html {
 }
 
 body {
-  background-color: var(--bg-deep);
+  background-color: var(--bg-canvas);
   color: var(--text-main);
   font-family: var(--font-sans);
   line-height: 1.8;
@@ -111,6 +112,13 @@ body {
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
+  /* 白基調の微細なアンティーク写本グリッド */
+  background-image: 
+    radial-gradient(ellipse at 50% 15%, rgba(180, 131, 22, 0.05) 0%, transparent 60%),
+    linear-gradient(rgba(15, 23, 42, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
+  background-attachment: fixed;
 }
 
 img {
@@ -130,45 +138,43 @@ ul {
 }
 
 /* ==========================================================================
-   背景レイヤー：機械時計・天球儀・星屑オーロラ
+   背景レイヤー：機械時計・天球儀・アンビエント光芒（白基調）
    ========================================================================== */
 
-/* 幻想的なアンビエント光芒 */
 .bg-glow {
   position: fixed;
   border-radius: 50%;
-  filter: blur(130px);
+  filter: blur(140px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.55;
-  transition: opacity 0.5s ease;
+  opacity: 0.45;
 }
 
 .bg-glow-1 {
-  width: 650px;
-  height: 650px;
-  background: radial-gradient(circle, rgba(126, 34, 206, 0.28) 0%, rgba(30, 64, 175, 0.18) 50%, transparent 75%);
-  top: -150px;
-  right: -100px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(180, 131, 22, 0.16) 0%, rgba(217, 119, 6, 0.08) 50%, transparent 75%);
+  top: -120px;
+  right: -80px;
   animation: pulseAura 18s ease-in-out infinite alternate;
 }
 
 .bg-glow-2 {
-  width: 750px;
-  height: 750px;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(190, 18, 60, 0.12) 50%, transparent 75%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(126, 34, 206, 0.1) 0%, rgba(29, 78, 216, 0.08) 50%, transparent 75%);
   bottom: 5%;
-  left: -150px;
+  left: -120px;
   animation: pulseAura 22s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes pulseAura {
-  0% { transform: scale(1) translate(0, 0); opacity: 0.45; }
-  50% { transform: scale(1.15) translate(40px, 30px); opacity: 0.65; }
-  100% { transform: scale(0.95) translate(-30px, 20px); opacity: 0.45; }
+  0% { transform: scale(1) translate(0, 0); opacity: 0.35; }
+  50% { transform: scale(1.15) translate(30px, 20px); opacity: 0.55; }
+  100% { transform: scale(0.95) translate(-20px, 15px); opacity: 0.35; }
 }
 
-/* 機械時計・アストロラーベの幾何学オーバーレイ（CSS & SVG背景パターン） */
+/* 機械時計・アストロラーベの幾何学オーバーレイ（白背景用） */
 .bg-grid-overlay {
   position: fixed;
   top: 0;
@@ -178,16 +184,9 @@ ul {
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
-  /* 繊細なアストロ・ダイアグラム背景 */
-  background-image: 
-    /* 微細グリッド & レティクル */
-    radial-gradient(ellipse at 50% 30%, rgba(247, 208, 112, 0.06) 0%, transparent 70%),
-    linear-gradient(rgba(212, 175, 55, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 64px 64px, 64px 64px;
 }
 
-/* CSSのみで構築された巨大な時計仕掛け・アストロダイアル（アニメーション） */
+/* CSSで描画される巨大なアンティーク天球リング（白地用） */
 .bg-grid-overlay::before {
   content: '';
   position: absolute;
@@ -196,22 +195,20 @@ ul {
   width: 900px;
   height: 900px;
   border-radius: 50%;
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(180, 131, 22, 0.18);
   box-shadow: 
-    inset 0 0 60px rgba(212, 175, 55, 0.05),
-    0 0 40px rgba(212, 175, 55, 0.05);
+    inset 0 0 50px rgba(180, 131, 22, 0.04),
+    0 0 30px rgba(180, 131, 22, 0.04);
   background-image: 
-    /* 歯車状の目盛り */
-    repeating-conic-gradient(from 0deg, rgba(247, 208, 112, 0.12) 0deg 1deg, transparent 1deg 15deg),
-    repeating-conic-gradient(from 0deg, rgba(212, 175, 55, 0.08) 0deg 0.5deg, transparent 0.5deg 3deg),
-    radial-gradient(circle at 50% 50%, transparent 40%, rgba(212, 175, 55, 0.04) 40%, rgba(212, 175, 55, 0.04) 41%, transparent 41%),
-    radial-gradient(circle at 50% 50%, transparent 68%, rgba(212, 175, 55, 0.08) 68%, rgba(212, 175, 55, 0.08) 70%, transparent 70%),
-    radial-gradient(circle at 50% 50%, transparent 85%, rgba(247, 208, 112, 0.14) 85%, rgba(247, 208, 112, 0.14) 86%, transparent 86%);
+    repeating-conic-gradient(from 0deg, rgba(180, 131, 22, 0.12) 0deg 1deg, transparent 1deg 15deg),
+    repeating-conic-gradient(from 0deg, rgba(180, 131, 22, 0.08) 0deg 0.5deg, transparent 0.5deg 3deg),
+    radial-gradient(circle at 50% 50%, transparent 40%, rgba(180, 131, 22, 0.04) 40%, rgba(180, 131, 22, 0.04) 41%, transparent 41%),
+    radial-gradient(circle at 50% 50%, transparent 68%, rgba(180, 131, 22, 0.07) 68%, rgba(180, 131, 22, 0.07) 70%, transparent 70%),
+    radial-gradient(circle at 50% 50%, transparent 85%, rgba(180, 131, 22, 0.12) 85%, rgba(180, 131, 22, 0.12) 86%, transparent 86%);
   animation: rotateClockDial 120s linear infinite;
   opacity: 0.65;
 }
 
-/* 逆回転する同心インナーギア（ゼンマイ・天球軌道） */
 .bg-grid-overlay::after {
   content: '';
   position: absolute;
@@ -220,10 +217,10 @@ ul {
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  border: 1.5px dashed rgba(247, 208, 112, 0.22);
+  border: 1.5px dashed rgba(180, 131, 22, 0.22);
   background-image: 
-    repeating-conic-gradient(from 0deg, rgba(212, 175, 55, 0.18) 0deg 3deg, transparent 3deg 30deg),
-    radial-gradient(circle at 50% 50%, transparent 55%, rgba(212, 175, 55, 0.06) 55%, rgba(212, 175, 55, 0.06) 58%, transparent 58%);
+    repeating-conic-gradient(from 0deg, rgba(180, 131, 22, 0.14) 0deg 3deg, transparent 3deg 30deg),
+    radial-gradient(circle at 50% 50%, transparent 55%, rgba(180, 131, 22, 0.05) 55%, rgba(180, 131, 22, 0.05) 58%, transparent 58%);
   animation: rotateClockDialReverse 70s linear infinite;
   opacity: 0.55;
 }
@@ -238,7 +235,7 @@ ul {
   to { transform: rotate(0deg); }
 }
 
-/* Canvas用スタイル（動的機械時計） */
+/* 動的Canvas */
 #clockwork-canvas {
   position: fixed;
   top: 0;
@@ -266,7 +263,6 @@ ul {
   z-index: 2;
 }
 
-/* セクション区切り（アンティーク・オーナメントライン） */
 .section::before {
   content: '';
   position: absolute;
@@ -276,7 +272,7 @@ ul {
   width: 80%;
   max-width: 900px;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.4) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(180, 131, 22, 0.35) 50%, transparent 100%);
 }
 
 /* セクション見出し装飾 */
@@ -297,7 +293,6 @@ ul {
   align-items: center;
   gap: 12px;
   margin-bottom: 8px;
-  text-shadow: 0 0 12px var(--gold-glow);
 }
 
 .section-sub::before,
@@ -310,11 +305,10 @@ ul {
 .section-heading {
   font-family: var(--font-title-ja);
   font-size: 2.2rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-pure);
   letter-spacing: 0.06em;
   margin-bottom: 14px;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
 }
 
 .section-bar {
@@ -324,7 +318,6 @@ ul {
   background: var(--grad-gold);
   border-radius: 2px;
   position: relative;
-  box-shadow: 0 0 10px var(--gold-glow);
 }
 
 .section-bar::after {
@@ -334,19 +327,17 @@ ul {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 0.75rem;
-  color: var(--gold-pure);
-  background: var(--bg-deep);
+  color: var(--gold-primary);
+  background: var(--bg-canvas);
   padding: 0 6px;
 }
 
 /* ==========================================================================
-   神のみぞ知るセカイ風：共通カード装飾 (.cyber-card / Ornate Frame)
+   神のみぞ知るセカイ風：白基調カード装飾 (.cyber-card / Ornate Frame)
    ========================================================================== */
 .cyber-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 175, 55, 0.38);
+  border: 1px solid var(--gold-border);
   border-radius: 8px;
   position: relative;
   box-shadow: var(--shadow-clockwork);
@@ -354,7 +345,7 @@ ul {
   overflow: hidden;
 }
 
-/* 額縁の内枠ライン（ダブルボーダー効果） */
+/* 内枠の繊細なゴールドライン（二重額縁） */
 .cyber-card::before {
   content: '';
   position: absolute;
@@ -362,13 +353,13 @@ ul {
   left: 4px;
   right: 4px;
   bottom: 4px;
-  border: 1px solid rgba(247, 208, 112, 0.16);
+  border: 1px solid rgba(180, 131, 22, 0.18);
   border-radius: 5px;
   pointer-events: none;
   transition: var(--transition);
 }
 
-/* 四隅のヴィクトリアン・コーナー装飾（ゴールドオーナメント） */
+/* 四隅のヴィクトリアン・コーナー装飾（金箔飾り罫） */
 .cyber-card::after {
   content: '';
   position: absolute;
@@ -377,7 +368,7 @@ ul {
   width: 16px;
   height: 16px;
   background: linear-gradient(135deg, transparent 50%, var(--gold-bright) 50%);
-  opacity: 0.8;
+  opacity: 0.85;
   transition: var(--transition);
 }
 
@@ -389,7 +380,7 @@ ul {
 }
 
 .cyber-card:hover::before {
-  border-color: rgba(247, 208, 112, 0.4);
+  border-color: rgba(217, 119, 6, 0.45);
 }
 
 .cyber-card:hover::after {
@@ -398,17 +389,17 @@ ul {
 }
 
 /* ==========================================================================
-   ヘッダー (Site Header / Victorian Bar)
+   ヘッダー (Site Header / White Victorian Bar)
    ========================================================================== */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(6, 9, 19, 0.88);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid rgba(180, 131, 22, 0.3);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
   transition: var(--transition);
 }
 
@@ -437,14 +428,13 @@ ul {
   background: var(--grad-gold);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 18px var(--gold-glow);
 }
 
 .brand-ja {
   font-family: var(--font-title-ja);
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: var(--text-sub);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-main);
   letter-spacing: 0.08em;
 }
 
@@ -458,7 +448,7 @@ ul {
 .nav-link {
   font-family: var(--font-title-ja);
   font-size: 0.92rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-main);
   padding: 8px 16px;
   border-radius: 4px;
@@ -471,42 +461,42 @@ ul {
 }
 
 .nav-link i {
-  color: var(--gold-bright);
+  color: var(--gold-primary);
   font-size: 0.9rem;
   transition: var(--transition);
 }
 
 .nav-link:hover {
-  color: var(--gold-pure);
-  background: rgba(212, 175, 55, 0.12);
-  border-color: rgba(247, 208, 112, 0.4);
-  text-shadow: 0 0 8px var(--gold-glow);
+  color: var(--gold-dark);
+  background: rgba(180, 131, 22, 0.08);
+  border-color: rgba(180, 131, 22, 0.35);
 }
 
 .nav-link:hover i {
   transform: rotate(15deg) scale(1.15);
+  color: var(--gold-bright);
 }
 
 .nav-link.external-nav {
-  background: rgba(212, 175, 55, 0.08);
-  border-color: rgba(212, 175, 55, 0.25);
+  background: rgba(180, 131, 22, 0.06);
+  border-color: rgba(180, 131, 22, 0.2);
 }
 
 .nav-link.external-nav:hover {
   background: var(--grad-gold);
-  color: #060913;
+  color: #FFFFFF;
   border-color: var(--gold-bright);
-  -webkit-text-fill-color: #060913;
+  -webkit-text-fill-color: #FFFFFF;
 }
 
 .nav-link.external-nav:hover i {
-  color: #060913;
+  color: #FFFFFF;
 }
 
 /* モバイルハンバーガー */
 .mobile-toggle {
   display: none;
-  background: rgba(212, 175, 55, 0.1);
+  background: rgba(180, 131, 22, 0.08);
   border: 1px solid var(--gold-primary);
   border-radius: 4px;
   padding: 8px 10px;
@@ -517,7 +507,7 @@ ul {
   display: block;
   width: 22px;
   height: 2px;
-  background-color: var(--gold-bright);
+  background-color: var(--gold-dark);
   margin: 5px 0;
   transition: var(--transition);
 }
@@ -529,11 +519,11 @@ ul {
   right: -100%;
   width: 300px;
   height: 100vh;
-  background: rgba(8, 12, 24, 0.97);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-left: 1px solid var(--gold-primary);
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+  box-shadow: -10px 0 30px rgba(15, 23, 42, 0.15);
   z-index: 2000;
   padding: 30px 24px;
   transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -549,20 +539,20 @@ ul {
   align-items: center;
   padding-bottom: 18px;
   margin-bottom: 24px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  border-bottom: 1px solid rgba(180, 131, 22, 0.25);
 }
 
 .drawer-brand {
   font-family: var(--font-title-ja);
   font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--gold-bright);
+  font-weight: 800;
+  color: var(--gold-dark);
 }
 
 .drawer-close-btn {
   background: none;
   border: none;
-  color: var(--gold-bright);
+  color: var(--gold-dark);
   font-size: 1.4rem;
   cursor: pointer;
 }
@@ -580,26 +570,27 @@ ul {
   padding: 12px 16px;
   font-family: var(--font-title-ja);
   font-size: 1rem;
+  font-weight: 600;
   color: var(--text-main);
   border-radius: 6px;
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  background: rgba(212, 175, 55, 0.05);
+  border: 1px solid rgba(180, 131, 22, 0.18);
+  background: rgba(180, 131, 22, 0.04);
 }
 
 .mobile-link i {
-  color: var(--gold-bright);
+  color: var(--gold-primary);
   width: 20px;
 }
 
 .mobile-link:hover {
-  background: rgba(212, 175, 55, 0.2);
+  background: rgba(180, 131, 22, 0.12);
   border-color: var(--gold-bright);
-  color: var(--gold-pure);
+  color: var(--gold-dark);
 }
 
 /* ==========================================================================
    ヒーローセクション (Hero Banner & Quick Hubs)
-   『神のみぞ知るセカイ』コミックス表紙の重厚感と時計仕掛けのポータル
+   『神のみぞ知るセカイ』限定版表紙の重厚感とホワイトパーチメント
    ========================================================================== */
 .hero-section {
   padding: 40px 0 60px;
@@ -614,11 +605,10 @@ ul {
   margin-bottom: 32px;
   border: 2px solid var(--gold-primary);
   box-shadow: 
-    0 15px 40px rgba(0, 0, 0, 0.8),
-    inset 0 0 30px rgba(212, 175, 55, 0.15);
+    0 12px 32px rgba(15, 23, 42, 0.08),
+    0 0 0 4px rgba(255, 255, 255, 0.9);
 }
 
-/* 表紙風の四隅リッチ装飾枠 */
 .hero-banner-card::before {
   content: '';
   position: absolute;
@@ -626,7 +616,7 @@ ul {
   left: 8px;
   right: 8px;
   bottom: 8px;
-  border: 1px solid rgba(247, 208, 112, 0.35);
+  border: 1px solid rgba(180, 131, 22, 0.3);
   border-radius: 8px;
   pointer-events: none;
   z-index: 4;
@@ -640,7 +630,7 @@ ul {
   height: 100%;
   background-size: cover;
   background-position: center 25%;
-  filter: contrast(1.1) brightness(0.85);
+  filter: contrast(1.05) brightness(0.95);
   z-index: 1;
 }
 
@@ -651,8 +641,8 @@ ul {
   width: 100%;
   height: 100%;
   background: 
-    linear-gradient(90deg, rgba(6, 9, 19, 0.95) 0%, rgba(11, 17, 34, 0.82) 45%, rgba(6, 9, 19, 0.5) 100%),
-    radial-gradient(ellipse at 20% 50%, rgba(126, 34, 206, 0.35) 0%, transparent 60%);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.88) 45%, rgba(255, 255, 255, 0.4) 100%),
+    radial-gradient(ellipse at 20% 50%, rgba(217, 119, 6, 0.12) 0%, transparent 60%);
   z-index: 2;
 }
 
@@ -663,17 +653,16 @@ ul {
   max-width: 720px;
 }
 
-/* ステータスインジケーター（時計の脱進機風） */
 .status-indicator {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(6, 9, 19, 0.85);
-  border: 1px solid var(--gold-bright);
+  background: #FFFFFF;
+  border: 1.5px solid var(--gold-primary);
   padding: 6px 16px;
   border-radius: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 0 15px var(--gold-glow);
+  box-shadow: 0 2px 8px rgba(180, 131, 22, 0.15);
 }
 
 .status-dot {
@@ -681,7 +670,7 @@ ul {
   height: 8px;
   border-radius: 50%;
   background-color: var(--gold-bright);
-  box-shadow: 0 0 10px var(--gold-bright);
+  box-shadow: 0 0 8px var(--gold-bright);
   animation: clockTickPulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
@@ -693,36 +682,32 @@ ul {
 .status-text {
   font-family: var(--font-title-en);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.22em;
-  color: var(--gold-pure);
+  color: var(--gold-dark);
 }
 
 .hero-title {
   font-family: var(--font-title-ja);
   font-size: 2.8rem;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.08em;
   line-height: 1.25;
   margin-bottom: 12px;
-  color: #FFFFFF;
-  text-shadow: 
-    0 2px 10px rgba(0, 0, 0, 0.9),
-    0 0 30px rgba(247, 208, 112, 0.35);
+  color: var(--text-pure);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .hero-subtitle {
   font-family: var(--font-title-en);
   font-size: 1.05rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.16em;
-  color: var(--gold-bright);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  color: var(--gold-rich);
 }
 
 /* ==========================================================================
-   4つのダイレクトアクションカード (Hub Grid / Tarot Cards)
-   神のみぞ知るセカイのタロット・魔導書を思わせるクラシカルカード
+   4つのダイレクトアクションカード (Hub Grid / White Tarot Cards)
    ========================================================================== */
 .hub-grid {
   display: grid;
@@ -736,8 +721,8 @@ ul {
   align-items: center;
   gap: 16px;
   cursor: pointer;
-  background: var(--bg-card);
-  border: 1px solid rgba(212, 175, 55, 0.32);
+  background: #FFFFFF;
+  border: 1px solid var(--gold-border);
   border-radius: 8px;
   position: relative;
 }
@@ -746,23 +731,22 @@ ul {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(247, 208, 112, 0.25) 0%, rgba(212, 175, 55, 0.08) 70%);
-  border: 1.5px solid var(--gold-bright);
+  background: radial-gradient(circle at 30% 30%, #FEF3C7 0%, #FDE68A 70%);
+  border: 1.5px solid var(--gold-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.35rem;
-  color: var(--gold-bright);
+  color: var(--gold-dark);
   flex-shrink: 0;
-  box-shadow: 0 0 16px var(--gold-glow);
+  box-shadow: 0 2px 8px rgba(180, 131, 22, 0.15);
   transition: var(--transition);
 }
 
 .hub-card:hover .hub-icon {
   transform: rotate(360deg) scale(1.1);
   background: var(--grad-gold);
-  color: #060913;
-  box-shadow: 0 0 22px var(--gold-glow-intense);
+  color: #FFFFFF;
 }
 
 .hub-body {
@@ -772,29 +756,28 @@ ul {
 .hub-badge {
   font-family: var(--font-title-en);
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.14em;
-  color: var(--gold-bright);
+  color: var(--gold-rich);
   display: inline-block;
   margin-bottom: 4px;
 }
 
 .hub-card.featured-hub .hub-badge {
   color: var(--gem-ruby-bright);
-  text-shadow: 0 0 8px rgba(244, 63, 94, 0.5);
 }
 
 .hub-title {
   font-family: var(--font-title-ja);
   font-size: 1.12rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-pure);
   margin-bottom: 3px;
   transition: var(--transition);
 }
 
 .hub-card:hover .hub-title {
-  color: var(--gold-bright);
+  color: var(--gold-dark);
 }
 
 .hub-meta {
@@ -803,7 +786,7 @@ ul {
 }
 
 .hub-arrow {
-  color: var(--gold-dark);
+  color: var(--gold-primary);
   font-size: 1rem;
   transition: var(--transition);
 }
@@ -819,7 +802,7 @@ ul {
 .concert-highlight-card {
   padding: 32px;
   margin-bottom: 28px;
-  background: var(--bg-card);
+  background: #FFFFFF;
   border: 1.5px solid var(--gold-primary);
 }
 
@@ -833,11 +816,10 @@ ul {
 .concert-year-badge {
   font-family: var(--font-title-en);
   font-size: 0.85rem;
-  font-weight: 700;
   letter-spacing: 0.1em;
   padding: 4px 14px;
   background: var(--grad-gold);
-  color: #060913;
+  color: #FFFFFF;
   border-radius: 4px;
   font-weight: 800;
 }
@@ -845,19 +827,19 @@ ul {
 .concert-category-tag {
   font-family: var(--font-title-ja);
   font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--gold-bright);
+  font-weight: 700;
+  color: var(--gold-dark);
   letter-spacing: 0.05em;
 }
 
 .highlight-title {
   font-family: var(--font-title-ja);
   font-size: 1.6rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-pure);
   margin-bottom: 24px;
   padding-bottom: 14px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  border-bottom: 1px solid rgba(180, 131, 22, 0.2);
 }
 
 /* 記事カードグリッド（4つ並び） */
@@ -869,8 +851,8 @@ ul {
 
 .post-link-card {
   display: block;
-  background: rgba(8, 13, 28, 0.85);
-  border: 1px solid rgba(212, 175, 55, 0.28);
+  background: #FFFFFF;
+  border: 1px solid rgba(180, 131, 22, 0.25);
   border-radius: 6px;
   overflow: hidden;
   transition: var(--transition);
@@ -881,17 +863,18 @@ ul {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   position: relative;
+  background: #F1F5F9;
 }
 
 .post-thumb-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.4s ease;
 }
 
 .post-link-card:hover .post-thumb-wrap img {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .post-info {
@@ -901,8 +884,8 @@ ul {
 .post-date {
   font-family: var(--font-title-en);
   font-size: 0.74rem;
-  font-weight: 600;
-  color: var(--gold-bright);
+  font-weight: 700;
+  color: var(--gold-rich);
   display: block;
   margin-bottom: 6px;
 }
@@ -910,7 +893,7 @@ ul {
 .post-title {
   font-family: var(--font-title-ja);
   font-size: 0.94rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-pure);
   line-height: 1.5;
   display: flex;
@@ -921,7 +904,7 @@ ul {
 
 .post-title i {
   font-size: 0.75rem;
-  color: var(--gold-dark);
+  color: var(--gold-primary);
   margin-top: 4px;
   flex-shrink: 0;
   transition: var(--transition);
@@ -930,11 +913,11 @@ ul {
 .post-link-card:hover {
   border-color: var(--gold-bright);
   transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 20px var(--gold-glow);
+  box-shadow: 0 12px 28px rgba(180, 131, 22, 0.15);
 }
 
 .post-link-card:hover .post-title {
-  color: var(--gold-pure);
+  color: var(--gold-dark);
 }
 
 .post-link-card:hover .post-title i {
@@ -945,15 +928,15 @@ ul {
 /* 過去の年代ナビゲーション (Past Years List) */
 .past-years-box {
   padding: 26px 30px;
-  background: var(--bg-card);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: #FFFFFF;
+  border: 1px solid var(--gold-border);
 }
 
 .past-years-title {
   font-family: var(--font-title-ja);
   font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--gold-bright);
+  font-weight: 800;
+  color: var(--gold-dark);
   margin-bottom: 18px;
   display: flex;
   align-items: center;
@@ -972,30 +955,30 @@ ul {
 
 .year-pill {
   padding: 10px 14px;
-  background: rgba(13, 20, 40, 0.85);
-  border: 1px solid rgba(212, 175, 55, 0.22);
+  background: #F8FAFC;
+  border: 1px solid rgba(180, 131, 22, 0.2);
   border-radius: 6px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.84rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-main);
   transition: var(--transition);
 }
 
 .year-pill i {
   font-size: 0.72rem;
-  color: var(--gold-dark);
+  color: var(--gold-primary);
   transition: var(--transition);
 }
 
 .year-pill:hover {
-  background: rgba(212, 175, 55, 0.15);
+  background: #FFFBEB;
   border-color: var(--gold-bright);
-  color: var(--gold-pure);
+  color: var(--gold-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 10px var(--gold-glow);
+  box-shadow: 0 4px 12px rgba(180, 131, 22, 0.12);
 }
 
 .year-pill:hover i {
@@ -1005,7 +988,7 @@ ul {
 
 /* ==========================================================================
    なぞり絵ギャラリー (ArtWorkOut Gallery / Museum Frames)
-   絵画額縁・アンティークゴールドフレーム
+   絵画額縁・白地ゴールドフレーム
    ========================================================================== */
 .gallery-grid {
   display: grid;
@@ -1018,10 +1001,8 @@ ul {
   padding: 12px;
   cursor: pointer;
   border: 1.5px solid var(--gold-primary);
-  background: #080d1d;
-  box-shadow: 
-    0 12px 30px rgba(0, 0, 0, 0.7),
-    inset 0 0 20px rgba(212, 175, 55, 0.1);
+  background: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(180, 131, 22, 0.1);
   transition: var(--transition);
 }
 
@@ -1034,29 +1015,28 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(247, 208, 112, 0.25);
+  border: 1px solid rgba(180, 131, 22, 0.25);
 }
 
-/* なぞり絵の美しいアートグラデーション背景 */
 .art-bg-1 {
   background: 
-    radial-gradient(circle at 70% 30%, rgba(244, 63, 94, 0.7) 0%, transparent 60%),
-    radial-gradient(circle at 20% 80%, rgba(247, 208, 112, 0.75) 0%, transparent 60%),
-    linear-gradient(135deg, #1E1B4B 0%, #4C1D95 100%);
+    radial-gradient(circle at 70% 30%, rgba(244, 63, 94, 0.8) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(247, 208, 112, 0.85) 0%, transparent 60%),
+    linear-gradient(135deg, #312E81 0%, #6B21A8 100%);
 }
 
 .art-bg-2 {
   background: 
-    radial-gradient(circle at 30% 40%, rgba(56, 189, 248, 0.8) 0%, transparent 60%),
-    radial-gradient(circle at 80% 70%, rgba(129, 140, 248, 0.7) 0%, transparent 60%),
-    linear-gradient(135deg, #022C22 0%, #0F766E 100%);
+    radial-gradient(circle at 30% 40%, rgba(56, 189, 248, 0.85) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(129, 140, 248, 0.75) 0%, transparent 60%),
+    linear-gradient(135deg, #064E3B 0%, #0F766E 100%);
 }
 
 .art-bg-3 {
   background: 
-    radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.8) 0%, transparent 65%),
-    radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.6) 0%, transparent 55%),
-    linear-gradient(135deg, #1C1917 0%, #451A03 100%);
+    radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.85) 0%, transparent 65%),
+    radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.7) 0%, transparent 55%),
+    linear-gradient(135deg, #292524 0%, #78350F 100%);
 }
 
 .art-id {
@@ -1065,13 +1045,13 @@ ul {
   left: 10px;
   font-family: var(--font-title-en);
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.1em;
-  background: rgba(6, 9, 19, 0.85);
-  color: var(--gold-bright);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--gold-dark);
   padding: 3px 10px;
   border-radius: 4px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  border: 1px solid rgba(180, 131, 22, 0.4);
   z-index: 2;
 }
 
@@ -1079,7 +1059,7 @@ ul {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
   position: absolute;
   transition: transform 0.5s ease;
 }
@@ -1090,10 +1070,10 @@ ul {
   left: 0;
   width: 100%;
   padding: 12px;
-  background: linear-gradient(0deg, rgba(6, 9, 19, 0.95) 0%, transparent 100%);
+  background: linear-gradient(0deg, rgba(15, 23, 42, 0.95) 0%, transparent 100%);
   font-family: var(--font-title-ja);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #FFFFFF;
   text-align: center;
   transform: translateY(100%);
@@ -1119,9 +1099,7 @@ ul {
 .art-card:hover {
   border-color: var(--gold-bright);
   transform: translateY(-6px);
-  box-shadow: 
-    0 18px 45px rgba(0, 0, 0, 0.85),
-    0 0 35px var(--gold-glow-intense);
+  box-shadow: 0 16px 36px rgba(180, 131, 22, 0.22);
 }
 
 .art-bar {
@@ -1134,35 +1112,35 @@ ul {
 .art-name {
   font-family: var(--font-title-ja);
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-pure);
 }
 
 .art-date {
   font-family: var(--font-title-en);
   font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--gold-bright);
+  font-weight: 700;
+  color: var(--gold-rich);
 }
 
 .gallery-hint {
   text-align: center;
   font-size: 0.84rem;
-  color: var(--text-sub);
-  background: rgba(212, 175, 55, 0.08);
-  border: 1px dashed rgba(212, 175, 55, 0.3);
+  font-weight: 600;
+  color: var(--text-main);
+  background: #FFFBEB;
+  border: 1px dashed rgba(180, 131, 22, 0.35);
   padding: 12px 20px;
   border-radius: 6px;
 }
 
 .gallery-hint i {
-  color: var(--gold-bright);
+  color: var(--gold-primary);
   margin-right: 6px;
 }
 
 /* ==========================================================================
-   たけぽん & こじろう (Official Characters / Cameo Medallions)
-   アンティークメダリオン・ポートレート風
+   たけぽん & こじろう (Cameo Medallions / 白地ポートレート)
    ========================================================================== */
 .character-grid {
   display: grid;
@@ -1175,7 +1153,7 @@ ul {
   display: flex;
   gap: 24px;
   align-items: center;
-  background: var(--bg-card);
+  background: #FFFFFF;
   border: 1.5px solid var(--gold-primary);
 }
 
@@ -1184,8 +1162,8 @@ ul {
   height: 90px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid var(--gold-bright);
-  box-shadow: 0 0 20px var(--gold-glow);
+  border: 2px solid var(--gold-primary);
+  box-shadow: 0 4px 14px rgba(180, 131, 22, 0.2);
   flex-shrink: 0;
   position: relative;
 }
@@ -1208,8 +1186,8 @@ ul {
 .char-tag {
   font-family: var(--font-title-ja);
   font-size: 0.74rem;
-  font-weight: 700;
-  color: var(--gold-bright);
+  font-weight: 800;
+  color: var(--gold-rich);
   display: inline-block;
   margin-bottom: 4px;
   letter-spacing: 0.06em;
@@ -1218,14 +1196,14 @@ ul {
 .char-name {
   font-family: var(--font-title-ja);
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-pure);
   margin-bottom: 6px;
 }
 
 .char-desc {
   font-size: 0.88rem;
-  color: var(--text-sub);
+  color: var(--text-main);
   margin-bottom: 14px;
   line-height: 1.6;
 }
@@ -1237,23 +1215,23 @@ ul {
   padding: 8px 18px;
   font-family: var(--font-title-ja);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 4px;
   cursor: pointer;
   transition: var(--transition);
 }
 
 .btn-outline-cyber {
-  background: rgba(212, 175, 55, 0.08);
+  background: rgba(180, 131, 22, 0.06);
   border: 1px solid var(--gold-primary);
-  color: var(--gold-bright);
+  color: var(--gold-dark);
 }
 
 .btn-outline-cyber:hover {
   background: var(--grad-gold);
   border-color: var(--gold-bright);
-  color: #060913;
-  box-shadow: 0 0 16px var(--gold-glow-intense);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(180, 131, 22, 0.25);
 }
 
 .btn-sm {
@@ -1275,31 +1253,30 @@ ul {
   display: flex;
   align-items: center;
   gap: 18px;
-  background: var(--bg-card);
-  border: 1px solid rgba(212, 175, 55, 0.32);
+  background: #FFFFFF;
+  border: 1px solid var(--gold-border);
 }
 
 .portal-icon {
   width: 50px;
   height: 50px;
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid var(--gold-bright);
+  background: #FEF3C7;
+  border: 1px solid var(--gold-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.35rem;
-  color: var(--gold-bright);
+  color: var(--gold-dark);
   flex-shrink: 0;
-  box-shadow: 0 0 14px var(--gold-glow);
+  box-shadow: 0 2px 8px rgba(180, 131, 22, 0.15);
   transition: var(--transition);
 }
 
 .portal-icon.instagram-icon {
-  color: #F43F5E;
-  border-color: #F43F5E;
-  background: rgba(244, 63, 94, 0.12);
-  box-shadow: 0 0 14px rgba(244, 63, 94, 0.3);
+  color: #E11D48;
+  border-color: #FECDD3;
+  background: #FFF1F2;
 }
 
 .link-portal-card:hover .portal-icon {
@@ -1309,7 +1286,7 @@ ul {
 .portal-name {
   font-family: var(--font-title-ja);
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-pure);
   margin-bottom: 2px;
 }
@@ -1322,7 +1299,7 @@ ul {
 .portal-arrow {
   margin-left: auto;
   font-size: 0.9rem;
-  color: var(--gold-dark);
+  color: var(--gold-primary);
   transition: var(--transition);
 }
 
@@ -1332,14 +1309,15 @@ ul {
 }
 
 /* ==========================================================================
-   フッター (Site Footer / Antique Astrolabe Finish)
+   フッター (Site Footer / White Astrolabe Finish)
    ========================================================================== */
 .site-footer {
-  background-color: #04060d;
-  border-top: 1px solid rgba(212, 175, 55, 0.35);
+  background-color: #FFFFFF;
+  border-top: 1px solid rgba(180, 131, 22, 0.3);
   padding: 44px 0 24px;
   position: relative;
   z-index: 2;
+  box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.03);
 }
 
 .footer-inner {
@@ -1352,8 +1330,8 @@ ul {
 .footer-title {
   font-family: var(--font-title-ja);
   font-size: 1.15rem;
-  font-weight: 700;
-  color: #FFFFFF;
+  font-weight: 800;
+  color: var(--text-pure);
   display: block;
 }
 
@@ -1361,7 +1339,7 @@ ul {
   font-family: var(--font-title-en);
   font-size: 0.76rem;
   letter-spacing: 0.14em;
-  color: var(--gold-bright);
+  color: var(--gold-rich);
 }
 
 .footer-links {
@@ -1372,31 +1350,32 @@ ul {
 .f-link {
   font-family: var(--font-title-ja);
   font-size: 0.88rem;
-  color: var(--text-sub);
+  font-weight: 600;
+  color: var(--text-main);
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
   border-radius: 4px;
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(180, 131, 22, 0.2);
 }
 
 .f-link i {
-  color: var(--gold-bright);
+  color: var(--gold-primary);
 }
 
 .f-link:hover {
-  color: var(--gold-pure);
-  background: rgba(212, 175, 55, 0.12);
+  color: var(--gold-dark);
+  background: #FFFBEB;
   border-color: var(--gold-bright);
 }
 
 .footer-copy {
   text-align: center;
   font-size: 0.76rem;
-  color: rgba(241, 245, 249, 0.4);
+  color: var(--text-muted);
   padding-top: 18px;
-  border-top: 1px solid rgba(212, 175, 55, 0.1);
+  border-top: 1px solid rgba(180, 131, 22, 0.15);
   letter-spacing: 0.04em;
 }
 
@@ -1410,9 +1389,9 @@ ul {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(4, 6, 13, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   z-index: 3000;
   align-items: center;
   justify-content: center;
@@ -1420,16 +1399,14 @@ ul {
 }
 
 .lightbox-dialog {
-  background: #090e1f;
-  border: 2px solid var(--gold-bright);
+  background: #FFFFFF;
+  border: 2px solid var(--gold-primary);
   border-radius: 10px;
   max-width: 580px;
   width: 100%;
   padding: 24px;
   position: relative;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.9),
-    0 0 50px var(--gold-glow-intense);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
   animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1442,7 +1419,7 @@ ul {
   position: absolute;
   top: 14px;
   right: 14px;
-  background: rgba(212, 175, 55, 0.15);
+  background: rgba(180, 131, 22, 0.1);
   border: 1px solid var(--gold-primary);
   border-radius: 50%;
   width: 34px;
@@ -1451,14 +1428,14 @@ ul {
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
-  color: var(--gold-bright);
+  color: var(--gold-dark);
   cursor: pointer;
   transition: var(--transition);
 }
 
 .lightbox-close:hover {
-  background: var(--gold-bright);
-  color: #060913;
+  background: var(--gold-primary);
+  color: #FFFFFF;
   transform: rotate(90deg);
 }
 
@@ -1467,20 +1444,21 @@ ul {
   aspect-ratio: 4 / 3;
   border-radius: 6px;
   margin-bottom: 16px;
-  border: 1px solid rgba(247, 208, 112, 0.3);
+  border: 1px solid rgba(180, 131, 22, 0.3);
 }
 
 .lightbox-meta h3 {
   font-family: var(--font-title-ja);
   font-size: 1.35rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-pure);
   margin-bottom: 4px;
 }
 
 .lightbox-meta p {
   font-size: 0.86rem;
-  color: var(--gold-bright);
+  font-weight: 600;
+  color: var(--gold-rich);
 }
 
 /* ==========================================================================

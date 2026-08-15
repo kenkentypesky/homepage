@@ -1,6 +1,6 @@
 /**
  * 歌手たかはしたけし 公式ポータル スクリプト (script.js)
- * コンセプト: 『神のみぞ知るセカイ』風 アンティーク機械時計 & 歯車エンジン
+ * コンセプト: 『神のみぞ知るセカイ』風 白基調アンティーク機械時計 & 歯車エンジン
  * HTML完全無変更で動作
  */
 
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. 『神のみぞ知るセカイ』機械時計 & 歯車 Canvas 背景エンジンの起動
+  // 2. 『神のみぞ知るセカイ』白基調 機械時計 & 歯車 Canvas 背景エンジンの起動
   initClockworkCanvas();
 });
 
@@ -67,10 +67,9 @@ function closeLightbox(event) {
 }
 
 // ==========================================================================
-// 4. 機械時計（Clockwork Engine）& 歯車・天球盤・星屑 Canvas
+// 4. 白基調 機械時計（Clockwork Engine）& 歯車・天球盤・星屑 Canvas
 // ==========================================================================
 function initClockworkCanvas() {
-  // 既存キャンバスがあれば削除
   let canvas = document.getElementById('clockwork-canvas');
   if (!canvas) {
     canvas = document.createElement('canvas');
@@ -95,30 +94,30 @@ function initClockworkCanvas() {
     targetMouseY = (e.clientY - height / 2) * 0.05;
   });
 
-  // 星屑パーティクルの初期化
-  const particleCount = 45;
+  // 星屑パーティクルの初期化（白背景用：アンバーゴールド & サファイア & アメジスト）
+  const particleCount = 40;
   const particles = [];
   for (let i = 0; i < particleCount; i++) {
     particles.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 2 + 0.8,
-      speedY: Math.random() * 0.4 + 0.15,
+      size: Math.random() * 2 + 1,
+      speedY: Math.random() * 0.35 + 0.15,
       speedX: (Math.random() - 0.5) * 0.2,
-      opacity: Math.random() * 0.6 + 0.2,
+      opacity: Math.random() * 0.5 + 0.2,
       pulse: Math.random() * Math.PI * 2,
-      color: Math.random() > 0.3 ? '#F7D070' : '#C084FC'
+      color: Math.random() > 0.4 ? '#D97706' : (Math.random() > 0.5 ? '#7E22CE' : '#2563EB')
     });
   }
 
-  // 歯車描画ヘルパー
+  // 歯車描画ヘルパー（白背景でクッキリ映える真鍮・アンバーゴールド）
   function drawGear(cx, cy, radius, teeth, teethHeight, angle, color, spokeCount = 4) {
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(angle);
 
     ctx.strokeStyle = color;
-    ctx.fillStyle = 'rgba(10, 15, 30, 0.45)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
     ctx.lineWidth = 1.5;
 
     // 歯車の輪郭
@@ -168,13 +167,13 @@ function initClockworkCanvas() {
     // センターハブ & ルビー調センター
     ctx.beginPath();
     ctx.arc(0, 0, radius * 0.22, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(15, 23, 45, 0.9)';
+    ctx.fillStyle = '#FFFFFF';
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
     ctx.arc(0, 0, 4, 0, Math.PI * 2);
-    ctx.fillStyle = '#F43F5E'; // ルビー軸受
+    ctx.fillStyle = '#E11D48'; // ルビー軸受
     ctx.fill();
 
     ctx.restore();
@@ -188,7 +187,6 @@ function initClockworkCanvas() {
   function render() {
     ctx.clearRect(0, 0, width, height);
 
-    // マウス視差のスムージング
     mouseX += (targetMouseX - mouseX) * 0.05;
     mouseY += (targetMouseY - mouseY) * 0.05;
 
@@ -201,7 +199,7 @@ function initClockworkCanvas() {
     const hours = (now.getHours() % 12) + mins / 60;
 
     // ==========================================================
-    // 1. 浮遊する星屑パーティクル
+    // 1. 浮遊する星屑パーティクル（白背景用）
     // ==========================================================
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
@@ -218,8 +216,6 @@ function initClockworkCanvas() {
       ctx.save();
       ctx.globalAlpha = alpha;
       ctx.fillStyle = p.color;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = p.color;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
@@ -237,13 +233,13 @@ function initClockworkCanvas() {
     ctx.translate(clockX, clockY);
 
     // 外枠二重サークル（アストロレール）
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
+    ctx.strokeStyle = 'rgba(180, 131, 22, 0.4)';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(0, 0, clockRadius, 0, Math.PI * 2);
     ctx.stroke();
 
-    ctx.strokeStyle = 'rgba(247, 208, 112, 0.2)';
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.25)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.arc(0, 0, clockRadius - 12, 0, Math.PI * 2);
@@ -257,7 +253,7 @@ function initClockworkCanvas() {
       const r1 = clockRadius - 12;
       const r2 = r1 - len;
 
-      ctx.strokeStyle = isMajor ? 'rgba(247, 208, 112, 0.6)' : 'rgba(212, 175, 55, 0.25)';
+      ctx.strokeStyle = isMajor ? 'rgba(180, 131, 22, 0.8)' : 'rgba(180, 131, 22, 0.3)';
       ctx.lineWidth = isMajor ? 1.5 : 1;
       ctx.beginPath();
       ctx.moveTo(Math.cos(angle) * r1, Math.sin(angle) * r1);
@@ -265,9 +261,9 @@ function initClockworkCanvas() {
       ctx.stroke();
     }
 
-    // 12個のローマ数字文字盤
-    ctx.font = `600 ${Math.max(12, clockRadius * 0.08)}px "Cinzel", serif`;
-    ctx.fillStyle = 'rgba(247, 208, 112, 0.75)';
+    // 12個のローマ数字文字盤（白背景でクッキリ読めるクラシックゴールド）
+    ctx.font = `700 ${Math.max(12, clockRadius * 0.082)}px "Cinzel", serif`;
+    ctx.fillStyle = '#92400E';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     for (let i = 0; i < 12; i++) {
@@ -278,25 +274,24 @@ function initClockworkCanvas() {
       ctx.fillText(romanNumerals[i], tx, ty);
     }
 
-    // 内部の天球儀・幾何学リング
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.15)';
+    // 内部の幾何学リング
+    ctx.strokeStyle = 'rgba(180, 131, 22, 0.2)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.arc(0, 0, clockRadius * 0.58, 0, Math.PI * 2);
     ctx.stroke();
 
     // 連動する背面のアンティーク歯車たち
-    drawGear(-clockRadius * 0.35, -clockRadius * 0.25, 45, 18, 5, globalTick * 0.5, 'rgba(212, 175, 55, 0.3)', 6);
-    drawGear(clockRadius * 0.3, clockRadius * 0.28, 65, 24, 6, -globalTick * 0.35, 'rgba(247, 208, 112, 0.28)', 8);
-    drawGear(-clockRadius * 0.2, clockRadius * 0.4, 38, 14, 4, globalTick * 0.6, 'rgba(197, 160, 89, 0.32)', 5);
+    drawGear(-clockRadius * 0.35, -clockRadius * 0.25, 45, 18, 5, globalTick * 0.5, 'rgba(180, 131, 22, 0.4)', 6);
+    drawGear(clockRadius * 0.3, clockRadius * 0.28, 65, 24, 6, -globalTick * 0.35, 'rgba(217, 119, 6, 0.38)', 8);
+    drawGear(-clockRadius * 0.2, clockRadius * 0.4, 38, 14, 4, globalTick * 0.6, 'rgba(146, 64, 14, 0.35)', 5);
 
     // 時計の針（ブレゲ風ヴィクトリアン・フィリグリー針）
-    // 1. 時針 (Hour Hand)
+    // 1. 時針 (Hour Hand - ディープ真鍮)
     const hourAngle = (hours * Math.PI * 2) / 12 - Math.PI / 2;
     ctx.save();
     ctx.rotate(hourAngle);
-    ctx.strokeStyle = 'rgba(247, 208, 112, 0.9)';
-    ctx.fillStyle = 'rgba(212, 175, 55, 0.6)';
+    ctx.strokeStyle = '#78350F';
     ctx.lineWidth = 2.5;
     ctx.beginPath();
     ctx.moveTo(0, 8);
@@ -308,11 +303,11 @@ function initClockworkCanvas() {
     ctx.stroke();
     ctx.restore();
 
-    // 2. 分針 (Minute Hand)
+    // 2. 分針 (Minute Hand - クラシックゴールド)
     const minAngle = (mins * Math.PI * 2) / 60 - Math.PI / 2;
     ctx.save();
     ctx.rotate(minAngle);
-    ctx.strokeStyle = 'rgba(255, 240, 194, 0.95)';
+    ctx.strokeStyle = '#B48316';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, 12);
@@ -324,29 +319,29 @@ function initClockworkCanvas() {
     ctx.stroke();
     ctx.restore();
 
-    // 3. 秒針 (Second Hand)
+    // 3. 秒針 (Second Hand - 鮮烈なルビーレッド)
     const secAngle = (secs * Math.PI * 2) / 60 - Math.PI / 2;
     ctx.save();
     ctx.rotate(secAngle);
-    ctx.strokeStyle = 'rgba(244, 63, 94, 0.85)'; // ルビーレッド秒針
-    ctx.lineWidth = 1.2;
+    ctx.strokeStyle = '#E11D48';
+    ctx.lineWidth = 1.3;
     ctx.beginPath();
     ctx.moveTo(0, 20);
     ctx.lineTo(0, -clockRadius * 0.82);
     ctx.stroke();
     // カウンターウェイト
     ctx.beginPath();
-    ctx.arc(0, 14, 3, 0, Math.PI * 2);
-    ctx.fillStyle = '#F43F5E';
+    ctx.arc(0, 14, 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#E11D48';
     ctx.fill();
     ctx.restore();
 
     // 中心軸キャップ
     ctx.beginPath();
     ctx.arc(0, 0, 7, 0, Math.PI * 2);
-    ctx.fillStyle = '#F7D070';
+    ctx.fillStyle = '#D97706';
     ctx.fill();
-    ctx.strokeStyle = '#8C6D37';
+    ctx.strokeStyle = '#78350F';
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
@@ -365,7 +360,7 @@ function initClockworkCanvas() {
     const pendulumAngle = Math.sin(globalTick * 1.6) * 0.18;
     ctx.save();
     ctx.rotate(pendulumAngle);
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.3)';
+    ctx.strokeStyle = 'rgba(180, 131, 22, 0.45)';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, 0);
@@ -374,16 +369,17 @@ function initClockworkCanvas() {
     // 振り子ボブ
     ctx.beginPath();
     ctx.arc(0, 160, 22, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(15, 23, 45, 0.8)';
+    ctx.fillStyle = '#FFFFFF';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(247, 208, 112, 0.5)';
+    ctx.strokeStyle = '#B48316';
+    ctx.lineWidth = 2;
     ctx.stroke();
     ctx.restore();
 
     // 噛み合う3連歯車
-    drawGear(0, 0, 80, 28, 7, globalTick * 0.25, 'rgba(212, 175, 55, 0.28)', 6);
-    drawGear(105, -55, 50, 18, 5, -globalTick * 0.4, 'rgba(247, 208, 112, 0.3)', 4);
-    drawGear(-70, 75, 40, 14, 4, -globalTick * 0.5, 'rgba(197, 160, 89, 0.25)', 4);
+    drawGear(0, 0, 80, 28, 7, globalTick * 0.25, 'rgba(180, 131, 22, 0.35)', 6);
+    drawGear(105, -55, 50, 18, 5, -globalTick * 0.4, 'rgba(217, 119, 6, 0.38)', 4);
+    drawGear(-70, 75, 40, 14, 4, -globalTick * 0.5, 'rgba(146, 64, 14, 0.3)', 4);
 
     ctx.restore();
 
