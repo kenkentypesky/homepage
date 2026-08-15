@@ -1,0 +1,377 @@
+/* ==========================================================================
+   デザイン切り替えスイッチャー (switcher.css)
+   全6テーマ（ガクトゥーン、神のみ白、神のみ夜、魔法科、ルネサンス、サイバー）を
+   ワンクリックで安全かつ美しくプレビュー・切り替えるためのUIスタイル
+   ========================================================================== */
+
+/* --- フローティング起動ボタン (FAB) --- */
+.theme-switcher-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 0 16px rgba(245, 158, 11, 0.25);
+  padding: 10px 18px;
+  border-radius: 9999px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  user-select: none;
+}
+
+.theme-switcher-fab:hover {
+  transform: translateY(-3px) scale(1.04);
+  background: rgba(26, 35, 60, 0.95);
+  border-color: #F59E0B;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 0 24px rgba(245, 158, 11, 0.45);
+}
+
+.theme-switcher-fab:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.theme-fab-icon {
+  font-size: 1.15rem;
+  color: #F59E0B;
+  animation: theme-icon-spin 12s linear infinite;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes theme-icon-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.theme-fab-text {
+  color: #F8FAFC;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.theme-fab-badge {
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  color: #0F172A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- テーマモーダル オーバーレイ --- */
+.theme-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: rgba(5, 8, 18, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.theme-modal-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- テーマモーダル本体 --- */
+.theme-modal-card {
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  background: rgba(15, 23, 42, 0.94);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(245, 158, 11, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(20px) scale(0.96);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  color: #F8FAFC;
+}
+
+.theme-modal-backdrop.is-open .theme-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+/* モーダルヘッダー */
+.theme-modal-header {
+  padding: 22px 28px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.theme-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.theme-modal-title {
+  font-size: 1.28rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 0.02em;
+}
+
+.theme-modal-title i {
+  color: #F59E0B;
+}
+
+.theme-modal-subtitle {
+  font-size: 0.84rem;
+  color: #94A3B8;
+  line-height: 1.5;
+}
+
+.theme-modal-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #CBD5E1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-modal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #FCA5A5;
+  transform: rotate(90deg);
+}
+
+/* テーマリスト（スクロール可能エリア） */
+.theme-modal-body {
+  padding: 24px 28px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.theme-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .theme-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 個別テーマ選択カード */
+.theme-select-card {
+  position: relative;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  user-select: none;
+}
+
+.theme-select-card:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(245, 158, 11, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 14px rgba(245, 158, 11, 0.15);
+}
+
+.theme-select-card.is-active {
+  background: rgba(30, 41, 59, 0.95);
+  border: 1.8px solid #F59E0B;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+/* カードトップ行（バッジ & パレット） */
+.theme-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.theme-style-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #CBD5E1;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.theme-select-card.is-active .theme-style-badge {
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.theme-palette-dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.palette-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* カードタイトル＆説明 */
+.theme-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.theme-card-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.theme-card-sub {
+  font-size: 0.78rem;
+  color: #F59E0B;
+  font-weight: 500;
+}
+
+.theme-card-desc {
+  font-size: 0.78rem;
+  color: #94A3B8;
+  line-height: 1.45;
+  margin-top: 2px;
+}
+
+/* アクティブ状態表示 */
+.active-check-badge {
+  display: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  align-items: center;
+  gap: 4px;
+}
+
+.theme-select-card.is-active .active-check-badge {
+  display: inline-flex;
+}
+
+/* モーダルフッター */
+.theme-modal-footer {
+  padding: 16px 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.theme-footer-note {
+  font-size: 0.76rem;
+  color: #64748B;
+}
+
+.theme-share-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #E2E8F0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.theme-share-btn:hover {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #F59E0B;
+}
+
+/* トースト通知 */
+.theme-toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  z-index: 10002;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid #10B981;
+  color: #F8FAFC;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.theme-toast.is-show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+}

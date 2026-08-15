@@ -1,0 +1,1557 @@
+﻿/* ==========================================================================
+   歌手たかはしたけし 公式ポータル スタイルシート (style.css)
+   コンセプト: 「Neo-Rinascimento（ネオ・ルネサンス / 新生サイバー・イタリアーノ）」
+   イタリア古典美（大理石・金箔・オペラ座・ローマ幾何学） × 近未来（ネオングロー・HUDフレーム・ホログラム）
+   HTML完全無変更（CSSのみで構築）
+   ========================================================================== */
+
+/* --- Google Web Fonts & Custom Properties --- */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Italiana&family=Outfit:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;500;600;700&display=swap');
+
+:root {
+  /* --- Italian Classic × Cyber Futurism Color Palette --- */
+  --bg-deep: #070509;                  /* 深淵なるオペラ座の夜 */
+  --bg-surface: #0F0A14;               /* 深いヴィオラ・マーブル（大理石） */
+  --bg-surface-elevated: #17101F;      /* レイヤード・サーフェス */
+  
+  /* イタリアン・ゴールド ＆ ネオン発光 (Renaissance Gold to Cyber Luminous) */
+  --gold-pure: #E6BD56;                /* 伝統金箔の気品ある輝き */
+  --gold-bright: #FFE89E;              /* ハイライトゴールド */
+  --gold-deep: #966E1D;                /* アンティークブロンズゴールド */
+  --gold-glow: rgba(230, 189, 86, 0.35);
+  --gold-glow-intense: rgba(255, 215, 0, 0.7);
+  
+  /* イタリアン・トリコロールのサイバー昇華 (Cyber Italian Accents) */
+  --cyber-emerald: #00F0A8;            /* ヴェネツィアの碧海・サイバーエメラルド */
+  --cyber-emerald-glow: rgba(0, 240, 168, 0.35);
+  --cyber-crimson: #FF2A5F;            /* スカラ座のビロード・サイバークリムゾン */
+  --cyber-crimson-glow: rgba(255, 42, 95, 0.35);
+  --cyber-azure: #00D4FF;              /* 地中海のアズールブルー */
+  --cyber-terracotta: #FF7043;         /* トスカーナのテラコッタ */
+
+  /* マテリアル & テキスト */
+  --text-pure: #FFFDF9;                /* クラシカルな純白 */
+  --text-main: #EFE7D8;                /* 温かみのある大理石トーンの白 */
+  --text-muted: #A89B8D;               /* アンティーク・スレート */
+  --text-gold: #E5C378;                /* 金文字 */
+
+  /* ボーダー & フレーム */
+  --border-gold: rgba(230, 189, 86, 0.22);
+  --border-gold-bright: rgba(255, 232, 158, 0.6);
+  --border-cyber: rgba(0, 240, 168, 0.25);
+
+  /* タイポグラフィ */
+  --font-serif: 'Shippori Mincho', 'Cinzel', 'Italiana', serif;
+  --font-sans: 'Outfit', 'Noto Sans JP', sans-serif;
+  --font-display: 'Cinzel', 'Shippori Mincho', serif;
+
+  /* シャドウ & グロー */
+  --glow-card: 0 12px 36px rgba(0, 0, 0, 0.65), 0 0 20px rgba(230, 189, 86, 0.08);
+  --glow-hover: 0 18px 50px rgba(0, 0, 0, 0.85), 0 0 32px rgba(230, 189, 86, 0.28), 0 0 12px rgba(0, 240, 168, 0.2);
+
+  /* トランジション */
+  --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #070509;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #E6BD56 0%, #966E1D 100%);
+  border-radius: 5px;
+  border: 2px solid #070509;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFE89E;
+}
+
+/* --- Text Selection --- */
+::selection {
+  background: rgba(230, 189, 86, 0.3);
+  color: #FFE89E;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(139, 0, 50, 0.16) 0%, transparent 60%),
+    radial-gradient(circle at 12% 42%, rgba(230, 189, 86, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 88% 78%, rgba(0, 240, 168, 0.06) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+ul {
+  list-style: none;
+}
+
+/* --- Ambient Background Glows & Cyber Classical Grid --- */
+.bg-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(150px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+  transition: var(--transition-smooth);
+}
+
+/* オペラ座の深紅と金箔のオーラ */
+.bg-glow-1 {
+  width: 620px;
+  height: 620px;
+  background: radial-gradient(circle, rgba(230, 189, 86, 0.42) 0%, rgba(139, 0, 50, 0.32) 60%, transparent 80%);
+  top: -120px;
+  right: -120px;
+  animation: pulse-glow-1 12s infinite alternate ease-in-out;
+}
+
+/* ヴェネツィアの碧海と夜空 */
+.bg-glow-2 {
+  width: 720px;
+  height: 720px;
+  background: radial-gradient(circle, rgba(0, 240, 168, 0.25) 0%, rgba(0, 110, 255, 0.2) 50%, transparent 80%);
+  bottom: 5%;
+  left: -200px;
+  animation: pulse-glow-2 15s infinite alternate ease-in-out;
+}
+
+@keyframes pulse-glow-1 {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.35; }
+  100% { transform: scale(1.15) translate(-30px, 40px); opacity: 0.55; }
+}
+
+@keyframes pulse-glow-2 {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.3; }
+  100% { transform: scale(1.2) translate(40px, -30px); opacity: 0.5; }
+}
+
+/* クラシカルな幾何学模様と近未来グリッドの融合 */
+.bg-grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(to right, rgba(230, 189, 86, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(230, 189, 86, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(230, 189, 86, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 120px 120px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- Container & Section Layout --- */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  padding: 85px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.section:nth-of-type(even) {
+  background: linear-gradient(180deg, rgba(15, 10, 20, 0.5) 0%, rgba(23, 16, 31, 0.75) 50%, rgba(15, 10, 20, 0.5) 100%);
+  border-top: 1px solid rgba(230, 189, 86, 0.09);
+  border-bottom: 1px solid rgba(230, 189, 86, 0.09);
+}
+
+/* --- Section Titles: Neo-Renaissance Sculpture Style --- */
+.section-title-wrap {
+  margin-bottom: 44px;
+  text-align: center;
+  position: relative;
+}
+
+.section-sub {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--gold-pure);
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 8px;
+  position: relative;
+  text-shadow: 0 0 12px var(--gold-glow);
+}
+
+.section-sub::before,
+.section-sub::after {
+  content: '◆';
+  font-size: 0.55rem;
+  color: var(--cyber-emerald);
+  margin: 0 8px;
+  vertical-align: middle;
+  text-shadow: 0 0 8px var(--cyber-emerald-glow);
+}
+
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: var(--text-pure);
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, #FFFFFF 20%, #F5E6C8 60%, #E6BD56 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+}
+
+.section-bar {
+  width: 70px;
+  height: 3px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent 0%, var(--gold-pure) 30%, var(--cyber-emerald) 70%, transparent 100%);
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.section-bar::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 7px;
+  height: 7px;
+  background-color: var(--gold-bright);
+  box-shadow: 0 0 8px var(--gold-glow-intense);
+}
+
+/* --- Neo-Renaissance Cyber Card Base --- */
+.cyber-card {
+  background: linear-gradient(145deg, rgba(23, 16, 31, 0.78) 0%, rgba(15, 10, 20, 0.88) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  box-shadow: var(--glow-card);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+/* カードの四隅・上部に施すサイバー・フィリグリー装飾（金箔オーナメント×HUDライン） */
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold-pure) 20%, var(--cyber-emerald) 80%, transparent 100%);
+  opacity: 0.6;
+  transition: var(--transition);
+}
+
+.cyber-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top right, rgba(230, 189, 86, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+
+.cyber-card:hover {
+  border-color: var(--border-gold-bright);
+  background: linear-gradient(145deg, rgba(32, 22, 44, 0.9) 0%, rgba(20, 14, 28, 0.96) 100%);
+  box-shadow: var(--glow-hover);
+  transform: translateY(-5px);
+}
+
+.cyber-card:hover::before {
+  opacity: 1;
+  box-shadow: 0 0 12px var(--gold-glow-intense);
+}
+
+.cyber-card:hover::after {
+  opacity: 1;
+}
+
+/* --- Buttons & Action Elements --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+  position: relative;
+  letter-spacing: 0.05em;
+}
+
+.btn-primary-cyber {
+  background: linear-gradient(135deg, #B8860B 0%, #E6BD56 50%, #FFD700 100%);
+  color: #120A05;
+  font-weight: 700;
+  box-shadow: 0 4px 18px var(--gold-glow);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.btn-primary-cyber:hover {
+  background: linear-gradient(135deg, #E6BD56 0%, #FFE89E 50%, #E6BD56 100%);
+  box-shadow: 0 6px 25px var(--gold-glow-intense), 0 0 15px rgba(255, 215, 0, 0.5);
+  transform: translateY(-2px);
+  color: #0A0502;
+}
+
+.btn-outline-cyber {
+  background: rgba(230, 189, 86, 0.06);
+  color: var(--gold-bright);
+  border: 1px solid var(--border-gold);
+  backdrop-filter: blur(8px);
+}
+
+.btn-outline-cyber:hover {
+  background: rgba(230, 189, 86, 0.18);
+  border-color: var(--gold-pure);
+  color: #FFFFFF;
+  box-shadow: 0 0 18px var(--gold-glow);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 0.82rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* --- Site Header: Venetian Glass & Gold Leaf --- */
+.site-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(7, 5, 9, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-gold);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+}
+
+.site-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, var(--gold-pure) 30%, var(--cyber-emerald) 70%, transparent 95%);
+  opacity: 0.8;
+}
+
+.header-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-logo {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.brand-en {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F5E6C8 40%, #E6BD56 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(230, 189, 86, 0.3);
+}
+
+.brand-ja {
+  font-family: var(--font-serif);
+  font-size: 0.74rem;
+  color: var(--cyber-emerald);
+  letter-spacing: 0.08em;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-ja::before {
+  content: '✦';
+  font-size: 0.6rem;
+  color: var(--gold-pure);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-link {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  position: relative;
+  transition: var(--transition);
+}
+
+.nav-link i {
+  font-size: 0.85rem;
+  color: var(--gold-pure);
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: #FFFFFF;
+  background: rgba(230, 189, 86, 0.1);
+}
+
+.nav-link:hover i {
+  color: var(--cyber-emerald);
+  transform: scale(1.15);
+  text-shadow: 0 0 8px var(--cyber-emerald-glow);
+}
+
+.external-nav {
+  color: var(--gold-bright);
+  border: 1px solid rgba(230, 189, 86, 0.2);
+  background: rgba(230, 189, 86, 0.05);
+}
+
+.external-nav:hover {
+  border-color: var(--gold-pure);
+  background: rgba(230, 189, 86, 0.15);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+  display: none;
+  background: rgba(230, 189, 86, 0.1);
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 10px;
+  transition: var(--transition);
+}
+
+.mobile-toggle:hover {
+  background: rgba(230, 189, 86, 0.2);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--gold-pure);
+  margin: 5px 0;
+  border-radius: 2px;
+}
+
+/* Mobile Drawer: Neo-Renaissance Slate */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(15, 10, 20, 0.98) 0%, rgba(7, 5, 9, 0.98) 100%);
+  backdrop-filter: blur(24px);
+  z-index: 2000;
+  border-left: 1px solid var(--border-gold);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+  transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 30px 24px;
+}
+
+.mobile-drawer.is-active {
+  right: 0;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-gold);
+}
+
+.drawer-brand {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gold-pure);
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.drawer-close-btn {
+  background: rgba(230, 189, 86, 0.1);
+  border: 1px solid var(--border-gold);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-bright);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.drawer-close-btn:hover {
+  background: var(--cyber-crimson);
+  border-color: var(--cyber-crimson);
+  color: #FFFFFF;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mobile-link {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  padding: 10px 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+}
+
+.mobile-link:hover {
+  background: rgba(230, 189, 86, 0.1);
+  border-color: var(--border-gold);
+  color: #FFFFFF;
+  padding-left: 18px;
+}
+
+.mobile-link i {
+  color: var(--gold-pure);
+  width: 20px;
+}
+
+/* --- Hero Section: Cyber Colosseum / Grand Opera Theater --- */
+.hero-section {
+  padding: 40px 0 60px;
+}
+
+.hero-banner-card {
+  min-height: 240px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 40px 48px;
+  margin-bottom: 30px;
+  border-radius: 20px;
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(230, 189, 86, 0.12);
+}
+
+.hero-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(1.5px) brightness(0.45) saturate(1.2);
+  transform: scale(1.04);
+  transition: transform 0.8s ease;
+}
+
+.hero-banner-card:hover .hero-bg-image {
+  transform: scale(1.08);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(7, 5, 9, 0.96) 0%, 
+    rgba(15, 10, 20, 0.86) 45%, 
+    rgba(139, 0, 50, 0.35) 75%, 
+    rgba(0, 240, 168, 0.15) 100%);
+}
+
+.hero-text-content {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+}
+
+/* ローマ銘板風ステータスインジケーター */
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--gold-bright);
+  background: linear-gradient(90deg, rgba(230, 189, 86, 0.18) 0%, rgba(139, 0, 50, 0.2) 100%);
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border-gold-bright);
+  box-shadow: 0 0 15px var(--gold-glow);
+  margin-bottom: 14px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--cyber-emerald);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--cyber-emerald);
+  animation: radar-pulse 2s infinite ease-in-out;
+}
+
+@keyframes radar-pulse {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 14px var(--cyber-emerald); }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  background: linear-gradient(135deg, #FFFFFF 10%, #F5E6C8 40%, #E6BD56 80%, #FFD700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
+  margin-bottom: 6px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* --- Hub Grid: 4 Italian Portals (ルネサンスのアーチ門 × サイバーポータル) --- */
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.hub-card {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  cursor: pointer;
+  border-radius: 14px;
+  position: relative;
+}
+
+.hub-card.featured-hub {
+  border: 1px solid var(--border-gold-bright);
+  background: linear-gradient(135deg, rgba(32, 22, 44, 0.9) 0%, rgba(139, 0, 50, 0.25) 50%, rgba(15, 10, 20, 0.95) 100%);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 25px var(--gold-glow);
+}
+
+.hub-card.featured-hub::before {
+  background: linear-gradient(90deg, var(--gold-pure) 0%, var(--cyber-crimson) 50%, var(--gold-pure) 100%);
+  height: 3px;
+  opacity: 1;
+}
+
+.hub-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(230, 189, 86, 0.12) 0%, rgba(139, 0, 50, 0.15) 100%);
+  border: 1px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: var(--gold-bright);
+  flex-shrink: 0;
+  transition: var(--transition);
+  box-shadow: 0 0 15px rgba(230, 189, 86, 0.1);
+}
+
+.hub-card:hover .hub-icon {
+  background: linear-gradient(135deg, #B8860B 0%, #FFD700 100%);
+  color: #0E0702;
+  border-color: #FFD700;
+  box-shadow: 0 0 22px var(--gold-glow-intense);
+  transform: rotate(6deg) scale(1.08);
+}
+
+.hub-body {
+  flex-grow: 1;
+}
+
+.hub-badge {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #120A05;
+  background: linear-gradient(90deg, #E6BD56 0%, #FFE89E 100%);
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 8px var(--gold-glow);
+}
+
+.hub-badge.sub {
+  color: var(--cyber-emerald);
+  background: rgba(0, 240, 168, 0.1);
+  border: 1px solid rgba(0, 240, 168, 0.3);
+  box-shadow: none;
+}
+
+.hub-title {
+  font-family: var(--font-serif);
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: var(--text-pure);
+  margin-bottom: 4px;
+  letter-spacing: 0.03em;
+  transition: var(--transition);
+}
+
+.hub-card:hover .hub-title {
+  color: var(--gold-bright);
+}
+
+.hub-meta {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.small-icon {
+  font-size: 0.72rem;
+  margin-left: 3px;
+  color: var(--gold-pure);
+}
+
+.hub-arrow {
+  color: var(--gold-pure);
+  font-size: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(230, 189, 86, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.hub-card:hover .hub-arrow {
+  color: #0E0702;
+  background: var(--gold-bright);
+  box-shadow: 0 0 14px var(--gold-glow-intense);
+  transform: translateX(5px);
+}
+
+/* --- Concerts & Archives: Teatro all'Antica --- */
+.concert-highlight-card {
+  padding: 32px;
+  margin-bottom: 30px;
+  border: 1px solid var(--border-gold-bright);
+  background: linear-gradient(145deg, rgba(28, 19, 36, 0.85) 0%, rgba(14, 9, 18, 0.95) 100%);
+}
+
+.highlight-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.concert-year-badge {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #120A05;
+  background: linear-gradient(135deg, #FFD700 0%, #E6BD56 100%);
+  padding: 4px 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px var(--gold-glow);
+}
+
+.concert-category-tag {
+  font-size: 0.78rem;
+  color: var(--cyber-emerald);
+  background: rgba(0, 240, 168, 0.1);
+  border: 1px solid rgba(0, 240, 168, 0.25);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.highlight-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-pure);
+  margin-bottom: 24px;
+  letter-spacing: 0.04em;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.highlight-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 45px;
+  height: 2px;
+  background: var(--gold-pure);
+  box-shadow: 0 0 8px var(--gold-glow);
+}
+
+/* Article Grid: 4 Fresco/Relief Cards */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.post-link-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(230, 189, 86, 0.15);
+  background: rgba(14, 9, 18, 0.8);
+}
+
+.post-thumb-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background-color: #0A070D;
+  position: relative;
+}
+
+.post-thumb-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, transparent 50%, rgba(7, 5, 9, 0.8) 100%);
+}
+
+.post-thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+  filter: contrast(1.05) brightness(0.95);
+}
+
+.post-link-card:hover .post-thumb-wrap img {
+  transform: scale(1.1);
+  filter: contrast(1.1) brightness(1.05);
+}
+
+.post-info {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background: linear-gradient(180deg, rgba(20, 14, 26, 0.9) 0%, rgba(14, 9, 18, 0.95) 100%);
+}
+
+.post-date {
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  color: var(--gold-pure);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.post-date::before {
+  content: '▪';
+  color: var(--cyber-emerald);
+}
+
+.post-title {
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-pure);
+  line-height: 1.45;
+  transition: var(--transition);
+}
+
+.post-link-card:hover .post-title {
+  color: var(--gold-bright);
+}
+
+.post-title i {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-left: 4px;
+  transition: var(--transition);
+}
+
+.post-link-card:hover .post-title i {
+  color: var(--cyber-emerald);
+  transform: translateY(-2px) translateX(2px);
+}
+
+/* Past Years Box: Ancient Inscription Archive (古代銘板風アーカイブ) */
+.past-years-box {
+  padding: 28px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(20, 14, 26, 0.8) 0%, rgba(12, 8, 15, 0.9) 100%);
+  border: 1px solid var(--border-gold);
+}
+
+.past-years-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-pure);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.past-years-title i {
+  color: var(--gold-pure);
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.years-tag-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.year-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(7, 5, 9, 0.7);
+  border: 1px solid rgba(230, 189, 86, 0.16);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+
+.year-pill:hover {
+  border-color: var(--gold-pure);
+  background: rgba(230, 189, 86, 0.12);
+  color: var(--gold-bright);
+  box-shadow: 0 0 16px var(--gold-glow);
+  transform: translateY(-2px);
+}
+
+.year-pill i {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.year-pill:hover i {
+  color: var(--cyber-emerald);
+}
+
+/* --- ArtWorkOut Gallery: Renaissance Holographic Frame --- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-bottom: 20px;
+}
+
+.art-card {
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--border-gold);
+}
+
+.art-visual {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.art-card:hover .art-visual {
+  transform: scale(1.05);
+}
+
+/* ヴェネツィアン・グラスとトスカーナの深淵をモチーフにしたリッチグラデーション */
+.art-bg-1 { 
+  background: radial-gradient(circle at center, #00A86B 0%, #064E3B 50%, #070509 100%); 
+}
+.art-bg-2 { 
+  background: radial-gradient(circle at center, #0088CC 0%, #172554 50%, #070509 100%); 
+}
+.art-bg-3 { 
+  background: radial-gradient(circle at center, #C2185B 0%, #4A0E4E 50%, #070509 100%); 
+}
+
+/* 絵画の真鍮プレート風IDバッジ */
+.art-id {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #120A05;
+  background: linear-gradient(135deg, #FFE89E 0%, #E6BD56 100%);
+  padding: 3px 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.art-center-glow {
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(230, 189, 86, 0.4) 40%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(10px);
+  animation: art-pulse 4s infinite ease-in-out alternate;
+}
+
+@keyframes art-pulse {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(1.3); opacity: 0.9; }
+}
+
+.art-title-hover {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(7, 5, 9, 0.6);
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(230, 189, 86, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+.art-title-hover i {
+  color: var(--cyber-emerald);
+}
+
+.art-bar {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(20, 14, 26, 0.95) 0%, rgba(12, 8, 15, 0.98) 100%);
+  border-top: 1px solid var(--border-gold);
+}
+
+.art-name {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-pure);
+}
+
+.art-date {
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  color: var(--gold-pure);
+}
+
+.gallery-hint {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.gallery-hint i {
+  color: var(--gold-pure);
+  margin-right: 4px;
+}
+
+/* --- Characters: Takepon & Kojiro (イタリアン・メダリオン) --- */
+.character-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.char-card {
+  padding: 28px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  border-radius: 16px;
+}
+
+.char-avatar-wrap {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--gold-pure);
+  box-shadow: 0 0 20px var(--gold-glow), inset 0 0 10px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.char-avatar-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: inset 0 0 8px var(--gold-bright);
+  pointer-events: none;
+}
+
+.char-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.char-card:hover .char-avatar-img {
+  transform: scale(1.12);
+}
+
+.char-info {
+  flex-grow: 1;
+}
+
+.char-tag {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--cyber-emerald);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.char-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-pure);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.char-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+/* --- Official Channels: Luxury Industrial Portals --- */
+.official-links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.link-portal-card {
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-radius: 14px;
+}
+
+.portal-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(230, 189, 86, 0.1);
+  border: 1px solid var(--border-gold);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: var(--gold-bright);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.link-portal-card:hover .portal-icon {
+  background: linear-gradient(135deg, #B8860B 0%, #FFD700 100%);
+  color: #0E0702;
+  box-shadow: 0 0 20px var(--gold-glow-intense);
+  transform: scale(1.08);
+}
+
+.portal-icon.instagram-icon {
+  color: #FF2A5F;
+  background: rgba(255, 42, 95, 0.12);
+  border-color: rgba(255, 42, 95, 0.3);
+}
+
+.link-portal-card:hover .portal-icon.instagram-icon {
+  background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #FCB045 100%);
+  color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(255, 42, 95, 0.5);
+}
+
+.portal-name {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-pure);
+  transition: var(--transition);
+}
+
+.link-portal-card:hover .portal-name {
+  color: var(--gold-bright);
+}
+
+.portal-url {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.portal-arrow {
+  margin-left: auto;
+  font-size: 0.9rem;
+  color: var(--gold-pure);
+  transition: var(--transition);
+}
+
+.link-portal-card:hover .portal-arrow {
+  color: var(--cyber-emerald);
+  transform: translateX(4px);
+}
+
+/* --- Site Footer: Neo-Classic Signature --- */
+.site-footer {
+  background-color: #040305;
+  border-top: 1px solid var(--border-gold);
+  padding: 45px 0 25px;
+  position: relative;
+  z-index: 1;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, var(--gold-pure) 50%, transparent 90%);
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.footer-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  display: block;
+}
+
+.footer-sub {
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: var(--gold-pure);
+}
+
+.footer-links {
+  display: flex;
+  gap: 18px;
+}
+
+.f-link {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+
+.f-link:hover {
+  color: var(--gold-bright);
+  background: rgba(230, 189, 86, 0.08);
+  border-color: var(--border-gold);
+}
+
+.f-link i {
+  color: var(--gold-pure);
+}
+
+.footer-copy {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: rgba(230, 189, 86, 0.4);
+  padding-top: 18px;
+  border-top: 1px solid rgba(230, 189, 86, 0.08);
+}
+
+/* --- Lightbox Modal --- */
+.lightbox-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(4, 3, 5, 0.95);
+  backdrop-filter: blur(16px);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.lightbox-dialog {
+  background: linear-gradient(145deg, rgba(28, 19, 36, 0.98) 0%, rgba(14, 9, 18, 0.98) 100%);
+  border: 1px solid var(--gold-bright);
+  border-radius: 16px;
+  max-width: 580px;
+  width: 100%;
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 0 50px var(--gold-glow-intense);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(230, 189, 86, 0.1);
+  border: 1px solid var(--border-gold);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--gold-bright);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lightbox-close:hover {
+  background: var(--cyber-crimson);
+  border-color: var(--cyber-crimson);
+  color: #FFFFFF;
+}
+
+.lightbox-view {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-gold);
+}
+
+.lightbox-meta h3 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  color: var(--gold-bright);
+  margin-bottom: 6px;
+}
+
+.lightbox-meta p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 992px) {
+  .article-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .years-tag-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 55px 0;
+  }
+
+  .section-heading {
+    font-size: 1.7rem;
+  }
+
+  .hero-banner-card {
+    min-height: auto;
+    padding: 30px 24px;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hub-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .article-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .years-tag-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .character-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .official-links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 18px;
+    text-align: center;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+}

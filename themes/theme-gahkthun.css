@@ -1,0 +1,1547 @@
+﻿/* ==========================================================================
+   歌手たかはしたけし 公式ポータル スタイルシート (style.css)
+   コンセプト: 『黄雷のガクトゥーン (Gahkthun of the Golden Lightning)』オマージュ
+   テーマ: 『Gahkthun: Golden Chronometer & Tesla Lightning Edition』
+   - 重厚なスチームパンク（真鍮・黄銅・鉄鋼・琥珀色）× 鮮烈な黄金の雷光（テスラ放電）
+   - 背景にリアルタイム連動の「黄金時計（Golden Clockwork）」と「黄金の稲妻スパーク」
+   - リベット・真鍮ボルト・蒸気機関の計器盤装飾フレーム
+   - HTML完全無変更（CSS + 動的Canvas背景による構築）
+   ========================================================================== */
+
+/* --- Google Web Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chakra+Petch:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Shippori+Mincho:wght@400;600;700;800&display=swap');
+
+:root {
+  /* --- Steampunk & Tesla Palette --- */
+  --bg-deep: #07090F;                 /* 深淵なスチームアイアンブラック */
+  --bg-metal: #0F131D;                /* 鋼鉄・鋳鉄のダークスレート */
+  --bg-surface: rgba(15, 20, 32, 0.85);/* 重厚な半透明スモークガラス */
+  --bg-card: rgba(18, 24, 38, 0.88);  /* 真鍮カード面 */
+  --bg-card-hover: rgba(26, 35, 56, 0.95);
+  --bg-card-solid: #111726;
+
+  /* --- Gahkthun Golden Lightning & Brass (黄雷 & 真鍮) --- */
+  --lightning-pure: #FFFBEB;          /* 閃光の純白芯 */
+  --lightning-bright: #FFE600;        /* 鮮烈な黄金の雷光 */
+  --lightning-core: #FACC15;          /* エレクトリックゴールド */
+  --brass-bright: #E5B869;            /* 磨かれた真鍮 */
+  --brass-primary: #C59B47;           /* 重厚なアンティークブラス */
+  --brass-dark: #8C662D;              /* 酸化真鍮・ブロンズ */
+  --amber-rich: #D97706;              /* 琥珀色（スチームパンクアンバー） */
+  --amber-dark: #78350F;
+
+  /* --- Glows & Sparks --- */
+  --lightning-glow: rgba(255, 230, 0, 0.35);
+  --lightning-glow-intense: rgba(255, 230, 0, 0.65);
+  --brass-glow: rgba(197, 155, 71, 0.25);
+  --steam-glow: rgba(226, 232, 240, 0.08);
+
+  /* --- High-Contrast Typography --- */
+  --text-pure: #FFFFFF;               /* 純白見出し */
+  --text-main: #F1F5F9;               /* 本文（極めて読みやすいクリアホワイト） */
+  --text-sub: #CBD5E1;                /* 補足文章 */
+  --text-gold: #FFE600;               /* 黄金テキスト */
+  --text-brass: #E5B869;              /* 真鍮テキスト */
+  --text-muted: #94A3B8;              /* メタ情報 */
+
+  /* --- Fonts --- */
+  --font-title-en: 'Cinzel', 'Playfair Display', serif;
+  --font-title-ja: 'Shippori Mincho', 'Noto Serif JP', serif;
+  --font-steampunk: 'Chakra Petch', 'Outfit', sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Shippori Mincho', serif;
+  --font-sans: 'Noto Sans JP', 'Outfit', sans-serif;
+
+  /* --- Gradients --- */
+  --grad-lightning: linear-gradient(135deg, #FFFBEB 0%, #FFE600 35%, #F59E0B 75%, #B45309 100%);
+  --grad-brass: linear-gradient(135deg, #FDE68A 0%, #C59B47 45%, #8C662D 100%);
+  --grad-brass-plate: linear-gradient(180deg, rgba(229, 184, 105, 0.15) 0%, rgba(140, 102, 45, 0.05) 100%);
+  --grad-steampunk-border: linear-gradient(135deg, #FFE600, #8C662D 50%, #E5B869);
+
+  /* --- Shadows & Glows --- */
+  --shadow-steampunk: 0 12px 32px rgba(0, 0, 0, 0.7), 0 0 20px rgba(197, 155, 71, 0.15);
+  --shadow-card-hover: 0 18px 45px rgba(0, 0, 0, 0.85), 0 0 35px var(--lightning-glow);
+
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Scrollbar Customization --- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #07090F;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FFE600 0%, #C59B47 50%, #8C662D 100%);
+  border-radius: 4px;
+  border: 2px solid #07090F;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFFBEB;
+  box-shadow: 0 0 12px #FFE600;
+}
+
+/* --- Text Selection --- */
+::selection {
+  background: #FFE600;
+  color: #07090F;
+}
+
+/* --- Base Resets --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+ul {
+  list-style: none;
+}
+
+/* ==========================================================================
+   背景レイヤー：ガクトゥーン黄金時計・テスラ雷光・アンビエントオーラ
+   ========================================================================== */
+
+.bg-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(130px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.bg-glow-1 {
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(255, 230, 0, 0.22) 0%, rgba(217, 119, 6, 0.15) 50%, transparent 75%);
+  top: -120px;
+  right: -80px;
+  animation: pulseTesla 16s ease-in-out infinite alternate;
+}
+
+.bg-glow-2 {
+  width: 750px;
+  height: 750px;
+  background: radial-gradient(circle, rgba(140, 102, 45, 0.25) 0%, rgba(15, 23, 42, 0.3) 60%, transparent 80%);
+  bottom: 5%;
+  left: -150px;
+  animation: pulseTesla 20s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes pulseTesla {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+  50% { transform: scale(1.18) translate(30px, 20px); opacity: 0.65; }
+  100% { transform: scale(0.95) translate(-20px, 15px); opacity: 0.4; }
+}
+
+/* 背景オーバーレイ（スチームパンク真鍮グリッド & 計器サークル） */
+.bg-grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  background-image: 
+    radial-gradient(ellipse at 50% 30%, rgba(255, 230, 0, 0.05) 0%, transparent 70%),
+    linear-gradient(rgba(197, 155, 71, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(197, 155, 71, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 56px 56px, 56px 56px;
+}
+
+/* スチームパンク巨大アストロメーター・リング */
+.bg-grid-overlay::before {
+  content: '';
+  position: absolute;
+  top: -15vh;
+  right: -10vw;
+  width: 920px;
+  height: 920px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(197, 155, 71, 0.2);
+  box-shadow: 
+    inset 0 0 60px rgba(255, 230, 0, 0.04),
+    0 0 40px rgba(197, 155, 71, 0.06);
+  background-image: 
+    repeating-conic-gradient(from 0deg, rgba(255, 230, 0, 0.15) 0deg 1deg, transparent 1deg 15deg),
+    repeating-conic-gradient(from 0deg, rgba(197, 155, 71, 0.09) 0deg 0.5deg, transparent 0.5deg 3deg),
+    radial-gradient(circle at 50% 50%, transparent 40%, rgba(197, 155, 71, 0.05) 40%, rgba(197, 155, 71, 0.05) 41%, transparent 41%),
+    radial-gradient(circle at 50% 50%, transparent 68%, rgba(197, 155, 71, 0.08) 68%, rgba(197, 155, 71, 0.08) 70%, transparent 70%),
+    radial-gradient(circle at 50% 50%, transparent 85%, rgba(255, 230, 0, 0.16) 85%, rgba(255, 230, 0, 0.16) 86%, transparent 86%);
+  animation: rotateClockDial 120s linear infinite;
+  opacity: 0.6;
+}
+
+.bg-grid-overlay::after {
+  content: '';
+  position: absolute;
+  top: 5vh;
+  right: 5vw;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255, 230, 0, 0.25);
+  background-image: 
+    repeating-conic-gradient(from 0deg, rgba(197, 155, 71, 0.2) 0deg 3deg, transparent 3deg 30deg),
+    radial-gradient(circle at 50% 50%, transparent 55%, rgba(197, 155, 71, 0.07) 55%, rgba(197, 155, 71, 0.07) 58%, transparent 58%);
+  animation: rotateClockDialReverse 70s linear infinite;
+  opacity: 0.55;
+}
+
+@keyframes rotateClockDial {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateClockDialReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* 動的Canvas（ガクトゥーン黄金時計 & 雷光スパーク） */
+#clockwork-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   コンテナ & 共通レイアウト
+   ========================================================================== */
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.section {
+  padding: 84px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 900px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 230, 0, 0.5) 50%, transparent 100%);
+}
+
+/* セクション見出し装飾 */
+.section-title-wrap {
+  text-align: center;
+  margin-bottom: 52px;
+  position: relative;
+}
+
+.section-sub {
+  font-family: var(--font-steampunk);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--lightning-bright);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 14px var(--lightning-glow);
+}
+
+.section-sub::before,
+.section-sub::after {
+  content: '⚡';
+  font-size: 0.85rem;
+  color: var(--lightning-bright);
+  text-shadow: 0 0 8px var(--lightning-bright);
+}
+
+.section-heading {
+  font-family: var(--font-title-ja);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-pure);
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 230, 0, 0.2);
+}
+
+.section-bar {
+  width: 150px;
+  height: 3px;
+  margin: 0 auto;
+  background: var(--grad-lightning);
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 0 12px var(--lightning-glow);
+}
+
+.section-bar::after {
+  content: '⚙';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.95rem;
+  color: var(--lightning-bright);
+  background: var(--bg-deep);
+  padding: 0 6px;
+  text-shadow: 0 0 8px var(--lightning-bright);
+}
+
+/* ==========================================================================
+   ガクトゥーン風：スチームパンク真鍮カード装飾 (.cyber-card)
+   ========================================================================== */
+.cyber-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--brass-primary);
+  border-radius: 6px;
+  position: relative;
+  box-shadow: var(--shadow-steampunk);
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+/* 真鍮プレート内枠 & リベット */
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border: 1px solid rgba(229, 184, 105, 0.25);
+  border-radius: 4px;
+  pointer-events: none;
+  transition: var(--transition);
+}
+
+/* 四隅の真鍮リベット / ボルト装飾 */
+.cyber-card::after {
+  content: '⚙';
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 0.75rem;
+  color: var(--brass-bright);
+  opacity: 0.8;
+  transition: var(--transition);
+}
+
+.cyber-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--lightning-bright);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.cyber-card:hover::before {
+  border-color: rgba(255, 230, 0, 0.5);
+}
+
+.cyber-card:hover::after {
+  color: var(--lightning-bright);
+  transform: rotate(90deg) scale(1.2);
+  text-shadow: 0 0 10px var(--lightning-bright);
+}
+
+/* ==========================================================================
+   ヘッダー (Site Header / Steam Brass Header)
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(7, 9, 15, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1.5px solid var(--brass-primary);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.8), 0 0 15px rgba(197, 155, 71, 0.15);
+  transition: var(--transition);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ブランドロゴ */
+.brand-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+}
+
+.brand-en {
+  font-family: var(--font-title-en);
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  background: var(--grad-lightning);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 18px var(--lightning-glow);
+}
+
+.brand-ja {
+  font-family: var(--font-title-ja);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--brass-bright);
+  letter-spacing: 0.08em;
+}
+
+/* デスクトップナビゲーション */
+.nav-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: var(--font-title-ja);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-main);
+  padding: 8px 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.nav-link i {
+  color: var(--lightning-bright);
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: #FFFFFF;
+  background: rgba(255, 230, 0, 0.12);
+  border-color: var(--lightning-bright);
+  text-shadow: 0 0 10px var(--lightning-glow);
+}
+
+.nav-link:hover i {
+  transform: rotate(15deg) scale(1.2);
+  text-shadow: 0 0 10px var(--lightning-bright);
+}
+
+.nav-link.external-nav {
+  background: rgba(197, 155, 71, 0.1);
+  border-color: rgba(197, 155, 71, 0.3);
+}
+
+.nav-link.external-nav:hover {
+  background: var(--grad-lightning);
+  color: #07090F;
+  border-color: var(--lightning-bright);
+  -webkit-text-fill-color: #07090F;
+}
+
+.nav-link.external-nav:hover i {
+  color: #07090F;
+}
+
+/* モバイルハンバーガー */
+.mobile-toggle {
+  display: none;
+  background: rgba(197, 155, 71, 0.15);
+  border: 1px solid var(--brass-primary);
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--lightning-bright);
+  margin: 5px 0;
+  transition: var(--transition);
+}
+
+/* モバイルドロワー */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 300px;
+  height: 100vh;
+  background: rgba(9, 12, 20, 0.98);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1.5px solid var(--brass-primary);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.9);
+  z-index: 2000;
+  padding: 30px 24px;
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-drawer.is-active {
+  right: 0;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(197, 155, 71, 0.35);
+}
+
+.drawer-brand {
+  font-family: var(--font-title-ja);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--lightning-bright);
+}
+
+.drawer-close-btn {
+  background: none;
+  border: none;
+  color: var(--lightning-bright);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  font-family: var(--font-title-ja);
+  font-size: 1rem;
+  color: var(--text-main);
+  border-radius: 6px;
+  border: 1px solid rgba(197, 155, 71, 0.2);
+  background: rgba(197, 155, 71, 0.06);
+}
+
+.mobile-link i {
+  color: var(--lightning-bright);
+  width: 20px;
+}
+
+.mobile-link:hover {
+  background: rgba(255, 230, 0, 0.15);
+  border-color: var(--lightning-bright);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   ヒーローセクション (Hero Banner & Quick Hubs)
+   『黄雷のガクトゥーン』テスラ放電 & 黄金時計ポータル
+   ========================================================================== */
+.hero-section {
+  padding: 40px 0 60px;
+}
+
+.hero-banner-card {
+  height: 380px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  border: 2px solid var(--brass-primary);
+  box-shadow: 
+    0 15px 45px rgba(0, 0, 0, 0.85),
+    inset 0 0 35px rgba(197, 155, 71, 0.2);
+}
+
+.hero-banner-card::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 1px solid rgba(255, 230, 0, 0.35);
+  border-radius: 6px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.hero-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center 25%;
+  filter: contrast(1.15) brightness(0.8);
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(90deg, rgba(7, 9, 15, 0.96) 0%, rgba(15, 19, 29, 0.84) 45%, rgba(7, 9, 15, 0.5) 100%),
+    radial-gradient(ellipse at 20% 50%, rgba(217, 119, 6, 0.35) 0%, transparent 60%);
+  z-index: 2;
+}
+
+.hero-text-content {
+  position: relative;
+  z-index: 3;
+  padding: 0 48px;
+  max-width: 720px;
+}
+
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(7, 9, 15, 0.9);
+  border: 1.5px solid var(--lightning-bright);
+  padding: 6px 16px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px var(--lightning-glow);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--lightning-bright);
+  box-shadow: 0 0 12px var(--lightning-bright);
+  animation: teslaLightningFlicker 1.5s steps(2, start) infinite;
+}
+
+@keyframes teslaLightningFlicker {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  25% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.4); }
+  75% { opacity: 0.6; transform: scale(1.1); }
+}
+
+.status-text {
+  font-family: var(--font-steampunk);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: var(--lightning-bright);
+}
+
+.hero-title {
+  font-family: var(--font-title-ja);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  margin-bottom: 12px;
+  color: #FFFFFF;
+  text-shadow: 
+    0 2px 10px rgba(0, 0, 0, 0.9),
+    0 0 30px var(--lightning-glow);
+}
+
+.hero-subtitle {
+  font-family: var(--font-title-en);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--brass-bright);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* ==========================================================================
+   4つのダイレクトアクションカード (Hub Grid / Steam Brass Cards)
+   ========================================================================== */
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.hub-card {
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  background: var(--bg-card);
+  border: 1.5px solid var(--brass-primary);
+  border-radius: 6px;
+  position: relative;
+}
+
+.hub-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 230, 0, 0.25) 0%, rgba(140, 102, 45, 0.15) 70%);
+  border: 1.5px solid var(--lightning-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: var(--lightning-bright);
+  flex-shrink: 0;
+  box-shadow: 0 0 16px var(--lightning-glow);
+  transition: var(--transition);
+}
+
+.hub-card:hover .hub-icon {
+  transform: rotate(360deg) scale(1.1);
+  background: var(--grad-lightning);
+  color: #07090F;
+  box-shadow: 0 0 24px var(--lightning-glow-intense);
+}
+
+.hub-body {
+  flex-grow: 1;
+}
+
+.hub-badge {
+  font-family: var(--font-steampunk);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--lightning-bright);
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.hub-card.featured-hub .hub-badge {
+  color: #FF5555;
+  text-shadow: 0 0 10px rgba(255, 85, 85, 0.6);
+}
+
+.hub-title {
+  font-family: var(--font-title-ja);
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  margin-bottom: 3px;
+  transition: var(--transition);
+}
+
+.hub-card:hover .hub-title {
+  color: var(--lightning-bright);
+}
+
+.hub-meta {
+  font-size: 0.78rem;
+  color: var(--text-sub);
+}
+
+.hub-arrow {
+  color: var(--brass-dark);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.hub-card:hover .hub-arrow {
+  color: var(--lightning-bright);
+  transform: translateX(5px);
+}
+
+/* ==========================================================================
+   コンサートアーカイブ (Concert & Memories)
+   ========================================================================== */
+.concert-highlight-card {
+  padding: 32px;
+  margin-bottom: 28px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--brass-primary);
+}
+
+.highlight-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.concert-year-badge {
+  font-family: var(--font-steampunk);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 4px 14px;
+  background: var(--grad-lightning);
+  color: #07090F;
+  border-radius: 4px;
+}
+
+.concert-category-tag {
+  font-family: var(--font-title-ja);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--brass-bright);
+  letter-spacing: 0.05em;
+}
+
+.highlight-title {
+  font-family: var(--font-title-ja);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-pure);
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(197, 155, 71, 0.3);
+}
+
+/* 記事カードグリッド（4つ並び） */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.post-link-card {
+  display: block;
+  background: rgba(12, 16, 26, 0.9);
+  border: 1px solid rgba(197, 155, 71, 0.35);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.post-thumb-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  position: relative;
+}
+
+.post-thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.post-link-card:hover .post-thumb-wrap img {
+  transform: scale(1.08);
+}
+
+.post-info {
+  padding: 16px 14px;
+}
+
+.post-date {
+  font-family: var(--font-steampunk);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--lightning-bright);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.post-title {
+  font-family: var(--font-title-ja);
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  line-height: 1.5;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.post-title i {
+  font-size: 0.75rem;
+  color: var(--brass-dark);
+  margin-top: 4px;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.post-link-card:hover {
+  border-color: var(--lightning-bright);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px var(--lightning-glow);
+}
+
+.post-link-card:hover .post-title {
+  color: var(--lightning-bright);
+}
+
+.post-link-card:hover .post-title i {
+  color: var(--lightning-bright);
+  transform: translate(2px, -2px);
+}
+
+/* 過去の年代ナビゲーション (Past Years List) */
+.past-years-box {
+  padding: 26px 30px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--brass-primary);
+}
+
+.past-years-title {
+  font-family: var(--font-title-ja);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--lightning-bright);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.past-years-title i {
+  color: var(--brass-bright);
+}
+
+.years-tag-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.year-pill {
+  padding: 10px 14px;
+  background: rgba(14, 18, 30, 0.9);
+  border: 1px solid rgba(197, 155, 71, 0.3);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+
+.year-pill i {
+  font-size: 0.72rem;
+  color: var(--brass-dark);
+  transition: var(--transition);
+}
+
+.year-pill:hover {
+  background: rgba(255, 230, 0, 0.12);
+  border-color: var(--lightning-bright);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), 0 0 12px var(--lightning-glow);
+}
+
+.year-pill:hover i {
+  color: var(--lightning-bright);
+  transform: translate(2px, -2px);
+}
+
+/* ==========================================================================
+   なぞり絵ギャラリー (ArtWorkOut Gallery / Steam Picture Frames)
+   ========================================================================== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.art-card {
+  padding: 12px;
+  cursor: pointer;
+  border: 1.5px solid var(--brass-primary);
+  background: #090c16;
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.8),
+    inset 0 0 20px rgba(197, 155, 71, 0.15);
+  transition: var(--transition);
+}
+
+.art-visual {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 230, 0, 0.3);
+}
+
+.art-bg-1 {
+  background: 
+    radial-gradient(circle at 70% 30%, rgba(245, 158, 11, 0.8) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(255, 230, 0, 0.7) 0%, transparent 60%),
+    linear-gradient(135deg, #1C1917 0%, #451A03 100%);
+}
+
+.art-bg-2 {
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(56, 189, 248, 0.8) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(250, 204, 21, 0.7) 0%, transparent 60%),
+    linear-gradient(135deg, #022C22 0%, #0F766E 100%);
+}
+
+.art-bg-3 {
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.8) 0%, transparent 65%),
+    radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.6) 0%, transparent 55%),
+    linear-gradient(135deg, #1E1B4B 0%, #4C1D95 100%);
+}
+
+.art-id {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: var(--font-steampunk);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: rgba(7, 9, 15, 0.9);
+  color: var(--lightning-bright);
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--brass-primary);
+  z-index: 2;
+}
+
+.art-center-glow {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  position: absolute;
+  transition: transform 0.5s ease;
+}
+
+.art-title-hover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(0deg, rgba(7, 9, 15, 0.95) 0%, transparent 100%);
+  font-family: var(--font-title-ja);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.art-title-hover i {
+  color: var(--lightning-bright);
+}
+
+.art-card:hover .art-title-hover {
+  transform: translateY(0);
+}
+
+.art-card:hover .art-center-glow {
+  transform: scale(1.6);
+}
+
+.art-card:hover {
+  border-color: var(--lightning-bright);
+  transform: translateY(-6px);
+  box-shadow: 
+    0 18px 45px rgba(0, 0, 0, 0.9),
+    0 0 35px var(--lightning-glow-intense);
+}
+
+.art-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 4px 4px;
+}
+
+.art-name {
+  font-family: var(--font-title-ja);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-pure);
+}
+
+.art-date {
+  font-family: var(--font-steampunk);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--lightning-bright);
+}
+
+.gallery-hint {
+  text-align: center;
+  font-size: 0.84rem;
+  color: var(--text-sub);
+  background: rgba(197, 155, 71, 0.1);
+  border: 1px dashed rgba(197, 155, 71, 0.35);
+  padding: 12px 20px;
+  border-radius: 6px;
+}
+
+.gallery-hint i {
+  color: var(--lightning-bright);
+  margin-right: 6px;
+}
+
+/* ==========================================================================
+   たけぽん & こじろう (Official Characters)
+   ========================================================================== */
+.character-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.char-card {
+  padding: 28px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1.5px solid var(--brass-primary);
+}
+
+.char-avatar-wrap {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--lightning-bright);
+  box-shadow: 0 0 20px var(--lightning-glow);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.char-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.char-card:hover .char-avatar-img {
+  transform: scale(1.12);
+}
+
+.char-info {
+  flex-grow: 1;
+}
+
+.char-tag {
+  font-family: var(--font-title-ja);
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--lightning-bright);
+  display: inline-block;
+  margin-bottom: 4px;
+  letter-spacing: 0.06em;
+}
+
+.char-name {
+  font-family: var(--font-title-ja);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-pure);
+  margin-bottom: 6px;
+}
+
+.char-desc {
+  font-size: 0.88rem;
+  color: var(--text-sub);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  font-family: var(--font-title-ja);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-outline-cyber {
+  background: rgba(197, 155, 71, 0.1);
+  border: 1px solid var(--brass-primary);
+  color: var(--lightning-bright);
+}
+
+.btn-outline-cyber:hover {
+  background: var(--grad-lightning);
+  border-color: var(--lightning-bright);
+  color: #07090F;
+  box-shadow: 0 0 20px var(--lightning-glow-intense);
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   公式リンク & 連絡先 (Official Channels Grid)
+   ========================================================================== */
+.official-links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.link-portal-card {
+  padding: 22px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--brass-primary);
+}
+
+.portal-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(197, 155, 71, 0.15);
+  border: 1.5px solid var(--lightning-bright);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: var(--lightning-bright);
+  flex-shrink: 0;
+  box-shadow: 0 0 16px var(--lightning-glow);
+  transition: var(--transition);
+}
+
+.portal-icon.instagram-icon {
+  color: #F43F5E;
+  border-color: #F43F5E;
+  background: rgba(244, 63, 94, 0.15);
+  box-shadow: 0 0 14px rgba(244, 63, 94, 0.3);
+}
+
+.link-portal-card:hover .portal-icon {
+  transform: rotate(360deg) scale(1.1);
+}
+
+.portal-name {
+  font-family: var(--font-title-ja);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-pure);
+  margin-bottom: 2px;
+}
+
+.portal-url {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.portal-arrow {
+  margin-left: auto;
+  font-size: 0.9rem;
+  color: var(--brass-dark);
+  transition: var(--transition);
+}
+
+.link-portal-card:hover .portal-arrow {
+  color: var(--lightning-bright);
+  transform: translate(3px, -3px);
+}
+
+/* ==========================================================================
+   フッター (Site Footer / Steam Chronometer Finish)
+   ========================================================================== */
+.site-footer {
+  background-color: #04060A;
+  border-top: 1.5px solid var(--brass-primary);
+  padding: 44px 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.footer-title {
+  font-family: var(--font-title-ja);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  display: block;
+}
+
+.footer-sub {
+  font-family: var(--font-steampunk);
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  color: var(--lightning-bright);
+}
+
+.footer-links {
+  display: flex;
+  gap: 18px;
+}
+
+.f-link {
+  font-family: var(--font-title-ja);
+  font-size: 0.88rem;
+  color: var(--text-sub);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(197, 155, 71, 0.2);
+}
+
+.f-link i {
+  color: var(--lightning-bright);
+}
+
+.f-link:hover {
+  color: #FFFFFF;
+  background: rgba(255, 230, 0, 0.15);
+  border-color: var(--lightning-bright);
+}
+
+.footer-copy {
+  text-align: center;
+  font-size: 0.76rem;
+  color: rgba(241, 245, 249, 0.4);
+  padding-top: 18px;
+  border-top: 1px solid rgba(197, 155, 71, 0.15);
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   ライトボックスモーダル (Art Lightbox Modal)
+   ========================================================================== */
+.lightbox-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(4, 6, 10, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.lightbox-dialog {
+  background: #0d121f;
+  border: 2px solid var(--lightning-bright);
+  border-radius: 8px;
+  max-width: 580px;
+  width: 100%;
+  padding: 24px;
+  position: relative;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.9),
+    0 0 50px var(--lightning-glow-intense);
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(197, 155, 71, 0.2);
+  border: 1px solid var(--brass-primary);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--lightning-bright);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lightbox-close:hover {
+  background: var(--lightning-bright);
+  color: #07090F;
+  transform: rotate(90deg);
+}
+
+.lightbox-view {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 230, 0, 0.35);
+}
+
+.lightbox-meta h3 {
+  font-family: var(--font-title-ja);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-pure);
+  margin-bottom: 4px;
+}
+
+.lightbox-meta p {
+  font-size: 0.86rem;
+  color: var(--lightning-bright);
+}
+
+/* ==========================================================================
+   レスポンシブ対応 (Responsive Queries)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hub-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .article-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .years-tag-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 50px 0;
+  }
+
+  .hero-banner-card {
+    height: auto;
+    padding: 32px 20px;
+  }
+
+  .hero-text-content {
+    padding: 0 10px;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hub-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .article-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .years-tag-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .character-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .official-links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+}
