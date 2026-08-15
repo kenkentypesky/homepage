@@ -1,6 +1,7 @@
 /**
  * 歌手たかはしたけし 公式ポータル スクリプト (script.js)
  * コンセプト: 『神のみぞ知るセカイ』風 白基調アンティーク機械時計 & 歯車エンジン
+ * 完全リアルタイム同期（時・分・秒・ミリ秒 運針）
  * HTML完全無変更で動作
  */
 
@@ -179,7 +180,7 @@ function initClockworkCanvas() {
     ctx.restore();
   }
 
-  // ローマ数字の配列
+  // ローマ数字の配列（12時は真上）
   const romanNumerals = ['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'];
 
   let globalTick = 0;
@@ -192,6 +193,7 @@ function initClockworkCanvas() {
 
     globalTick += 0.015;
 
+    // 現在時刻の正確な取得
     const now = new Date();
     const millis = now.getMilliseconds();
     const secs = now.getSeconds() + millis / 1000;
@@ -233,19 +235,19 @@ function initClockworkCanvas() {
     ctx.translate(clockX, clockY);
 
     // 外枠二重サークル（アストロレール）
-    ctx.strokeStyle = 'rgba(180, 131, 22, 0.4)';
+    ctx.strokeStyle = 'rgba(180, 131, 22, 0.45)';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(0, 0, clockRadius, 0, Math.PI * 2);
     ctx.stroke();
 
-    ctx.strokeStyle = 'rgba(217, 119, 6, 0.25)';
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.3)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.arc(0, 0, clockRadius - 12, 0, Math.PI * 2);
     ctx.stroke();
 
-    // 60分割のミニッツインデックス
+    // 60分割のミニッツインデックス（真上が0分=12時）
     for (let i = 0; i < 60; i++) {
       const angle = (i * Math.PI * 2) / 60 - Math.PI / 2;
       const isMajor = i % 5 === 0;
@@ -253,7 +255,7 @@ function initClockworkCanvas() {
       const r1 = clockRadius - 12;
       const r2 = r1 - len;
 
-      ctx.strokeStyle = isMajor ? 'rgba(180, 131, 22, 0.8)' : 'rgba(180, 131, 22, 0.3)';
+      ctx.strokeStyle = isMajor ? 'rgba(180, 131, 22, 0.85)' : 'rgba(180, 131, 22, 0.35)';
       ctx.lineWidth = isMajor ? 1.5 : 1;
       ctx.beginPath();
       ctx.moveTo(Math.cos(angle) * r1, Math.sin(angle) * r1);
@@ -261,7 +263,7 @@ function initClockworkCanvas() {
       ctx.stroke();
     }
 
-    // 12個のローマ数字文字盤（白背景でクッキリ読めるクラシックゴールド）
+    // 12個のローマ数字文字盤（真上がXII）
     ctx.font = `700 ${Math.max(12, clockRadius * 0.082)}px "Cinzel", serif`;
     ctx.fillStyle = '#92400E';
     ctx.textAlign = 'center';
@@ -275,75 +277,91 @@ function initClockworkCanvas() {
     }
 
     // 内部の幾何学リング
-    ctx.strokeStyle = 'rgba(180, 131, 22, 0.2)';
+    ctx.strokeStyle = 'rgba(180, 131, 22, 0.22)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.arc(0, 0, clockRadius * 0.58, 0, Math.PI * 2);
     ctx.stroke();
 
-    // 連動する背面のアンティーク歯車たち
+    // 連動する背面のアンティーク歯車たち（秒針や時刻の進行に合わせて回転）
     drawGear(-clockRadius * 0.35, -clockRadius * 0.25, 45, 18, 5, globalTick * 0.5, 'rgba(180, 131, 22, 0.4)', 6);
     drawGear(clockRadius * 0.3, clockRadius * 0.28, 65, 24, 6, -globalTick * 0.35, 'rgba(217, 119, 6, 0.38)', 8);
     drawGear(-clockRadius * 0.2, clockRadius * 0.4, 38, 14, 4, globalTick * 0.6, 'rgba(146, 64, 14, 0.35)', 5);
 
-    // 時計の針（ブレゲ風ヴィクトリアン・フィリグリー針）
-    // 1. 時針 (Hour Hand - ディープ真鍮)
-    const hourAngle = (hours * Math.PI * 2) / 12 - Math.PI / 2;
+    // ==========================================================
+    // 正確な現在時刻の時計針（上向き基準：angle = 0 で12時方向）
+    // ==========================================================
+
+    // 1. 時針 (Hour Hand - 1周12時間 = 360度)
+    const hourAngle = (hours * Math.PI * 2) / 12;
     ctx.save();
     ctx.rotate(hourAngle);
     ctx.strokeStyle = '#78350F';
-    ctx.lineWidth = 2.5;
+    ctx.fillStyle = '#92400E';
+    ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.moveTo(0, 8);
-    ctx.lineTo(0, -clockRadius * 0.48);
+    ctx.moveTo(0, 10);
+    ctx.lineTo(0, -clockRadius * 0.5);
     ctx.stroke();
-    // ブレゲサークル
+    // クラシック・ブレゲリング & 装飾
     ctx.beginPath();
-    ctx.arc(0, -clockRadius * 0.36, 6, 0, Math.PI * 2);
+    ctx.arc(0, -clockRadius * 0.36, 7, 0, Math.PI * 2);
     ctx.stroke();
-    ctx.restore();
-
-    // 2. 分針 (Minute Hand - クラシックゴールド)
-    const minAngle = (mins * Math.PI * 2) / 60 - Math.PI / 2;
-    ctx.save();
-    ctx.rotate(minAngle);
-    ctx.strokeStyle = '#B48316';
-    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(0, 12);
-    ctx.lineTo(0, -clockRadius * 0.72);
-    ctx.stroke();
-    // ブレゲサークル
-    ctx.beginPath();
-    ctx.arc(0, -clockRadius * 0.58, 5, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.restore();
-
-    // 3. 秒針 (Second Hand - 鮮烈なルビーレッド)
-    const secAngle = (secs * Math.PI * 2) / 60 - Math.PI / 2;
-    ctx.save();
-    ctx.rotate(secAngle);
-    ctx.strokeStyle = '#E11D48';
-    ctx.lineWidth = 1.3;
-    ctx.beginPath();
-    ctx.moveTo(0, 20);
-    ctx.lineTo(0, -clockRadius * 0.82);
-    ctx.stroke();
-    // カウンターウェイト
-    ctx.beginPath();
-    ctx.arc(0, 14, 3.5, 0, Math.PI * 2);
-    ctx.fillStyle = '#E11D48';
+    ctx.arc(0, -clockRadius * 0.36, 3.5, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 
-    // 中心軸キャップ
+    // 2. 分針 (Minute Hand - 1周60分 = 360度)
+    const minAngle = (mins * Math.PI * 2) / 60;
+    ctx.save();
+    ctx.rotate(minAngle);
+    ctx.strokeStyle = '#B48316';
+    ctx.fillStyle = '#D97706';
+    ctx.lineWidth = 2.2;
     ctx.beginPath();
-    ctx.arc(0, 0, 7, 0, Math.PI * 2);
+    ctx.moveTo(0, 14);
+    ctx.lineTo(0, -clockRadius * 0.74);
+    ctx.stroke();
+    // ブレゲリング
+    ctx.beginPath();
+    ctx.arc(0, -clockRadius * 0.58, 6, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, -clockRadius * 0.58, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // 3. 秒針 (Second Hand - 1周60秒 = 360度・鮮烈なルビーレッド)
+    const secAngle = (secs * Math.PI * 2) / 60;
+    ctx.save();
+    ctx.rotate(secAngle);
+    ctx.strokeStyle = '#E11D48';
+    ctx.fillStyle = '#E11D48';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.moveTo(0, 22);
+    ctx.lineTo(0, -clockRadius * 0.84);
+    ctx.stroke();
+    // カウンターウェイト（後端リング）
+    ctx.beginPath();
+    ctx.arc(0, 15, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // 中心軸キャップ（ゴールド & ルビー）
+    ctx.beginPath();
+    ctx.arc(0, 0, 7.5, 0, Math.PI * 2);
     ctx.fillStyle = '#D97706';
     ctx.fill();
     ctx.strokeStyle = '#78350F';
     ctx.lineWidth = 1.5;
     ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#E11D48';
+    ctx.fill();
 
     ctx.restore();
 
@@ -356,8 +374,8 @@ function initClockworkCanvas() {
     ctx.save();
     ctx.translate(gearX, gearY);
 
-    // 振り子 (Swinging Pendulum)
-    const pendulumAngle = Math.sin(globalTick * 1.6) * 0.18;
+    // 振り子 (Swinging Pendulum - 1秒周期でチクタクとスイング)
+    const pendulumAngle = Math.sin((secs * Math.PI)) * 0.16;
     ctx.save();
     ctx.rotate(pendulumAngle);
     ctx.strokeStyle = 'rgba(180, 131, 22, 0.45)';
